@@ -1,0 +1,263 @@
+{
+  "createdAt": "2025-01-20T19:56:25.634Z",
+  "updatedAt": "2025-01-20T20:46:33.000Z",
+  "id": "h5q2kE1KOpGdGbqk",
+  "name": "📎—Airtable Backup CSV",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e3732cc6-4447-4d71-86d6-e88cff0400c6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "44896573-dac3-40fa-af72-ebe6ff2d558d",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        220,
+        0
+      ],
+      "id": "14b4f189-7b60-4ab3-ae8b-8fb4ba8c8cff",
+      "name": "Create Folder"
+    },
+    {
+      "parameters": {
+        "resource": "base",
+        "operation": "getSchema",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "42d66180-f36c-4214-ad6c-975f43fbb8f3",
+      "name": "Get Base",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        0
+      ],
+      "id": "ecddf06b-dc9a-4581-ad73-3531779e6c76",
+      "name": "Get Table",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  // Process each item in the input array\n  const transformedItem = {};\n\n  // Iterate over each key in the JSON object\n  for (const key in item.json) {\n    if (Array.isArray(item.json[key])) {\n      // If the property is an array, join its elements into a string\n      transformedItem[key] = item.json[key].join(\", \");\n    } else {\n      // Otherwise, keep the property as is\n      transformedItem[key] = item.json[key];\n    }\n  }\n\n  return { json: transformedItem };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "aff6a223-140d-4924-8aa3-b7e28f3ffceb",
+      "name": "Format"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        0
+      ],
+      "id": "16b2b897-65da-48bd-89ae-76656444482b",
+      "name": "Create CSV"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1560,
+        0
+      ],
+      "id": "27ae36dd-6ee8-42fd-8898-608d9bc8dd4c",
+      "name": "Upload CSV"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder": {
+      "main": [
+        []
+      ]
+    },
+    "Get Base": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Table": {
+      "main": [
+        [
+          {
+            "node": "Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format": {
+      "main": [
+        [
+          {
+            "node": "Create CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create CSV": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload CSV": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "cc329ce9-3a2b-4799-931d-71331563be1a",
+  "triggerCount": 0,
+  "tags": []
+}
