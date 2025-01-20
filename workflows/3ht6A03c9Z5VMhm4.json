@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-01-20T23:18:47.251Z",
-  "updatedAt": "2025-01-20T23:18:47.251Z",
+  "updatedAt": "2025-01-20T23:26:37.000Z",
   "id": "3ht6A03c9Z5VMhm4",
-  "name": "Creating an API endpoint",
+  "name": "😀—JSON Formatter Endpoint",
   "active": false,
   "nodes": [
     {
@@ -39,34 +39,12 @@
     {
       "parameters": {
         "respondWith": "text",
-        "responseBody": "=The URL of the Google search query for the term \"{{$node[\"Webhook\"].json[\"query\"][\"first_name\"]}} {{$node[\"Webhook\"].json[\"query\"][\"last_name\"]}}\" is: {{$json[\"product\"]}}",
+        "responseBody": "={{ $json.formattedBody }}",
         "options": {}
       },
       "id": "9c36dae5-0700-450c-9739-e9f3eff31bfe",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
-      "position": [
-        1060,
-        380
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
-              "name": "product",
-              "value": "=https://www.google.com/search?q={{$json[\"query\"][\"first_name\"]}}+{{$json[\"query\"][\"last_name\"]}}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "5a228fcb-78b9-4a28-95d2-d7c9fdf1d4ea",
-      "name": "Create URL string",
-      "type": "n8n-nodes-base.set",
       "position": [
         840,
         380
@@ -90,7 +68,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+        "jsCode": "// Extract the 'body' from the incoming webhook data\nconst body = $json.body;\n\n// Beautify the body JSON using JSON.stringify with 2 spaces indentation\nconst formattedBody = JSON.stringify(body, null, 2);\n\n// Return the beautified body\nreturn [\n  {\n    json: {\n      formattedBody: formattedBody\n    }\n  }\n];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -114,22 +92,11 @@
         ]
       ]
     },
-    "Create URL string": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code": {
       "main": [
         [
           {
-            "node": "Create URL string",
+            "node": "Respond to Webhook",
             "type": "main",
             "index": 0
           }
@@ -145,7 +112,7 @@
     "templateId": "1750"
   },
   "pinData": {},
-  "versionId": "0ebe7543-129e-4c27-a864-9bd189fc972f",
+  "versionId": "8a912b55-e056-41d5-82ae-d538447e965c",
   "triggerCount": 0,
   "tags": []
 }
