@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-21T15:38:13.226Z",
-  "updatedAt": "2025-01-21T15:38:13.226Z",
+  "updatedAt": "2025-01-21T15:45:43.000Z",
   "id": "ueXo8Gnp8gWoqfFH",
   "name": "My workflow",
   "active": false,
@@ -93,7 +93,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1140,
+        1160,
         320
       ],
       "id": "14afeb7e-7ad5-4aa5-90e5-ae8b3a975825",
@@ -101,87 +101,16 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a493c444-210d-4343-b5d5-fc7cb7aecdb2",
-              "name": "table",
-              "value": "={{ $json.table }}",
-              "type": "string"
-            },
-            {
-              "id": "f0b6feee-788a-4c5a-b1ec-f1a1869f0d6b",
-              "name": "Scenario",
-              "value": "={{ $json.concatenated_name.split(\",\" ).unique() }}",
-              "type": "array"
-            },
-            {
-              "id": "0d9f7a32-595a-45c6-afbd-51f01d2860a2",
-              "name": "action",
-              "value": "={{ $json.concatenated_module.split(\",\" ).unique() }}",
-              "type": "array"
-            },
-            {
-              "id": "e95a7e1e-f233-4593-a2bf-6385bc760738",
-              "name": "base_id",
-              "value": "={{ $json.concatenated_mapper_base.split(\",\" ).unique() }}",
-              "type": "array"
-            },
-            {
-              "id": "745c0f18-9f01-475f-a14e-bc6b12ee0d38",
-              "name": "base name",
-              "value": "={{ $json.concatenated_BASE_name .split(\",\" ) .unique() }}",
-              "type": "array"
-            },
-            {
-              "id": "a2d36786-7da1-4162-bf0c-1d3e5705175e",
-              "name": "field name",
-              "value": "={{ $json['concatenated_\\'expect_spec\\'_label'].split(\",\" ) .unique() }}",
-              "type": "array"
-            },
-            {
-              "id": "e71eafc9-56b5-4293-b267-1baa5a6af9b5",
-              "name": "type",
-              "value": "={{ $json['concatenated_\\'expect_spec\\'_type'] .split(\",\" )  }}",
-              "type": "array"
-            },
-            {
-              "id": "8350ca5f-5476-4c33-a889-86a7a82b8567",
-              "name": "field id",
-              "value": "={{ $json['concatenated_\\'expect_spec\\'_name'] .split(\",\" ).unique() }}",
-              "type": "array"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1560,
-        180
-      ],
-      "id": "005ef485-32e5-41a7-90f3-2d56aa198007",
-      "name": "table and data"
-    },
-    {
-      "parameters": {
         "method": "POST",
-        "url": "=https://api.airtable.com/v0/{{ $('table and data').item.json.base_id[0] }}/{{ $('table and data').item.json.table }}/{{ $json.id }}/comments",
+        "url": "=https://api.airtable.com/v0/{{ $('Table and Data').item.json.base_id[0] }}/{{ $('Table and Data').item.json.table }}/{{ $json.id }}/comments",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "airtableTokenApi",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {}
-          ]
-        },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
             {
               "name": "text",
-              "value": "=This record is used on the following Scenarios\n\nScenario: {{ $('table and data').item.json.Scenario[0] }}\n\nBase: {{ $('table and data').item.json['base name'][0] }}\n\nAction : {{ $('table and data').item.json.action[0] }}\n\nFields In use: {{ $('table and data').item.json['field name'] }}"
+              "value": "=This record is used on the following Scenarios\n\nScenario: {{ $('Table and Data').item.json.Scenario[0] }}\n\nBase: {{ $('Table and Data').item.json['base name'][0] }}\n\nAction : {{ $('Table and Data').item.json.action[0] }}\n\nFields In use: {{ $('Table and Data').item.json['field name'] }}"
             }
           ]
         },
@@ -194,7 +123,13 @@
         180
       ],
       "id": "a775af72-2bbe-45b9-81de-7b36ddda1cb0",
-      "name": "Create Comment"
+      "name": "Create Comment",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
     },
     {
       "parameters": {
@@ -252,7 +187,163 @@
         320
       ],
       "id": "fd5697cb-3c6f-468a-866e-4e9a7251f5ac",
-      "name": "Get scenarios"
+      "name": "Get scenarios",
+      "credentials": {
+        "githubApi": {
+          "id": "w9OVe7EajLtOxQ5D",
+          "name": "Karim's GitHub account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "concatenate",
+              "field": "name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "module"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "mapper_base"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "BASE name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "expect"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].label"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].type"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "table",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        320
+      ],
+      "id": "08376d45-f206-43a8-9adc-ba296ffb230c",
+      "name": "Concatenate "
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "={{ $json.base_id[0] }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $json.table }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1740,
+        180
+      ],
+      "id": "6a2d879c-574d-466e-a3a2-3afa823ee465",
+      "name": "Get base schema",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        320
+      ],
+      "id": "cd031844-d5e2-404d-a282-afad7fdbd09f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "## Setup\n\n1. Set up your username, github repo and username\n\n2. on the Github nodes set up your credentials \n\n3. Update the `GET BASE` Schema credentials and airtable credentials\n\n4. Update the credential on the `Create Comment` node to match your setup\n\nRun and test the setup",
+        "height": 260,
+        "width": 800,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "0ea0ce38-f64f-4fc4-a009-beced0d6d815",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9faa4763-13fc-401b-9739-65c3d06a9801",
+              "name": "user",
+              "value": "karimzynera",
+              "type": "string"
+            },
+            {
+              "id": "17b7b7c2-39dc-4663-86af-e9cdb7109b8d",
+              "name": "repo",
+              "value": "make-backup",
+              "type": "string"
+            },
+            {
+              "id": "38dd7309-9906-4363-b0f8-b697b4b07b71",
+              "name": "repo-path",
+              "value": "scenarios",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        320
+      ],
+      "id": "50b4df01-a06a-45c1-be4d-73d0cdb62f5a",
+      "name": "Edit Fields1"
     },
     {
       "parameters": {
@@ -329,138 +420,59 @@
         320
       ],
       "id": "51ec9fc4-e242-4770-93e3-6831c4828a96",
-      "name": "map out fields"
-    },
-    {
-      "parameters": {
-        "fieldsToSummarize": {
-          "values": [
-            {
-              "aggregation": "concatenate",
-              "field": "name"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "module"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "mapper_base"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "BASE name"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "['expect.spec'].name"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "expect"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "['expect.spec'].label"
-            },
-            {
-              "aggregation": "concatenate",
-              "field": "['expect.spec'].type"
-            }
-          ]
-        },
-        "fieldsToSplitBy": "table",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.summarize",
-      "typeVersion": 1,
-      "position": [
-        1340,
-        320
-      ],
-      "id": "08376d45-f206-43a8-9adc-ba296ffb230c",
-      "name": "Concatenate "
-    },
-    {
-      "parameters": {
-        "operation": "search",
-        "base": {
-          "__rl": true,
-          "value": "={{ $json.base_id[0] }}",
-          "mode": "id"
-        },
-        "table": {
-          "__rl": true,
-          "value": "={{ $json.table }}",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        1740,
-        180
-      ],
-      "id": "6a2d879c-574d-466e-a3a2-3afa823ee465",
-      "name": "Get base schema"
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "hours"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -480,
-        320
-      ],
-      "id": "cd031844-d5e2-404d-a282-afad7fdbd09f",
-      "name": "Schedule Trigger"
-    },
-    {
-      "parameters": {
-        "content": "## Setup\n\n1. Set up your username, github repo and username\n\n2. on the Github nodes set up your credentials \n\n3. Update the `GET BASE` Schema credentials and airtable credentials\n\n4. Update the credential on the `Create Comment` node to match your setup\n\nRun and test the setup",
-        "height": 260,
-        "width": 800,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        0,
-        0
-      ],
-      "typeVersion": 1,
-      "id": "0ea0ce38-f64f-4fc4-a009-beced0d6d815",
-      "name": "Sticky Note"
+      "name": "Map Out Fields"
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "9faa4763-13fc-401b-9739-65c3d06a9801",
-              "name": "user",
-              "value": "karimzynera",
+              "id": "a493c444-210d-4343-b5d5-fc7cb7aecdb2",
+              "name": "table",
+              "value": "={{ $json.table }}",
               "type": "string"
             },
             {
-              "id": "17b7b7c2-39dc-4663-86af-e9cdb7109b8d",
-              "name": "repo",
-              "value": "make-backup",
-              "type": "string"
+              "id": "f0b6feee-788a-4c5a-b1ec-f1a1869f0d6b",
+              "name": "Scenario",
+              "value": "={{ $json.concatenated_name.split(\",\" ).unique() }}",
+              "type": "array"
             },
             {
-              "id": "38dd7309-9906-4363-b0f8-b697b4b07b71",
-              "name": "repo-path",
-              "value": "scenarios",
-              "type": "string"
+              "id": "0d9f7a32-595a-45c6-afbd-51f01d2860a2",
+              "name": "action",
+              "value": "={{ $json.concatenated_module.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "e95a7e1e-f233-4593-a2bf-6385bc760738",
+              "name": "base_id",
+              "value": "={{ $json.concatenated_mapper_base.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "745c0f18-9f01-475f-a14e-bc6b12ee0d38",
+              "name": "base name",
+              "value": "={{ $json.concatenated_BASE_name .split(\",\" ) .unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "a2d36786-7da1-4162-bf0c-1d3e5705175e",
+              "name": "field name",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_label'].split(\",\" ) .unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "e71eafc9-56b5-4293-b267-1baa5a6af9b5",
+              "name": "type",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_type'] .split(\",\" )  }}",
+              "type": "array"
+            },
+            {
+              "id": "8350ca5f-5476-4c33-a889-86a7a82b8567",
+              "name": "field id",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_name'] .split(\",\" ).unique() }}",
+              "type": "array"
             }
           ]
         },
@@ -469,11 +481,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -300,
-        320
+        1560,
+        180
       ],
-      "id": "50b4df01-a06a-45c1-be4d-73d0cdb62f5a",
-      "name": "Edit Fields1"
+      "id": "005ef485-32e5-41a7-90f3-2d56aa198007",
+      "name": "Table and Data"
     }
   ],
   "connections": {
@@ -492,7 +504,7 @@
       "main": [
         [
           {
-            "node": "map out fields",
+            "node": "Map Out Fields",
             "type": "main",
             "index": 0
           }
@@ -532,17 +544,6 @@
         ]
       ]
     },
-    "table and data": {
-      "main": [
-        [
-          {
-            "node": "Get base schema",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "List files": {
       "main": [
         [
@@ -565,22 +566,11 @@
         ]
       ]
     },
-    "map out fields": {
-      "main": [
-        [
-          {
-            "node": "Filter",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Concatenate ": {
       "main": [
         [
           {
-            "node": "table and data",
+            "node": "Table and Data",
             "type": "main",
             "index": 0
           }
@@ -619,15 +609,39 @@
           }
         ]
       ]
+    },
+    "Map Out Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table and Data": {
+      "main": [
+        [
+          {
+            "node": "Get base schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "staticData": null,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "7d71b559-aab3-4dad-a575-74911cc809e8",
+  "versionId": "c1680eb7-a1b5-46fb-904a-1b56b6398566",
   "triggerCount": 0,
   "tags": [
     {
