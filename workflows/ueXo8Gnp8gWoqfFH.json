@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-01-21T15:38:13.226Z",
-  "updatedAt": "2025-01-21T15:56:08.000Z",
+  "updatedAt": "2025-01-21T15:58:53.000Z",
   "id": "ueXo8Gnp8gWoqfFH",
-  "name": "My workflow",
+  "name": "Zacharia's Work",
   "active": false,
   "nodes": [
     {
@@ -1263,7 +1263,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "6bf082eb-b4e7-4a5e-a162-297126a75bf7",
+  "versionId": "b99578a8-e2e6-4d60-afe1-cc21070e1cec",
   "triggerCount": 0,
   "tags": [
     {
