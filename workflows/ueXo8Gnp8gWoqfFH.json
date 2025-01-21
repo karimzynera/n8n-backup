@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-21T15:38:13.226Z",
-  "updatedAt": "2025-01-21T15:45:43.000Z",
+  "updatedAt": "2025-01-21T15:56:08.000Z",
   "id": "ueXo8Gnp8gWoqfFH",
   "name": "My workflow",
   "active": false,
@@ -486,6 +486,493 @@
       ],
       "id": "005ef485-32e5-41a7-90f3-2d56aa198007",
       "name": "Table and Data"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        500,
+        1160
+      ],
+      "id": "b0f6b285-1a44-4b4e-93c1-8b3ae4859acd",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "base",
+        "operation": "getSchema",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        1160
+      ],
+      "id": "85e33570-229d-4235-91a9-f7fa90b9d638",
+      "name": "base schema",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 5,
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        1160
+      ],
+      "id": "b56dcfb4-7477-4cb4-b94e-233aca38339b",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app2OBE1J2kRRZNMM",
+          "mode": "list",
+          "cachedResultName": "Effibotics CRM",
+          "cachedResultUrl": "https://airtable.com/app2OBE1J2kRRZNMM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $json.table }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1480,
+        980
+      ],
+      "id": "be650906-f0bb-411a-a336-ec401198aaf2",
+      "name": "get table"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1860,
+        980
+      ],
+      "id": "549ed4dc-4113-48dd-a599-c609cc3524f5",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.name }}",
+                    "rightValue": "Automations",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Automations"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cb83c583-60ca-4349-a486-d36116df1ef7",
+                    "leftValue": "={{ $json.name }}",
+                    "rightValue": "Appointments & Calls",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Appointments & Calls"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bc1b76b2-f7e6-43ae-bfb4-a15d1bb38f6b",
+                    "leftValue": "={{ $json.name }}",
+                    "rightValue": "Early Access tests\t",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Early Access tests\t"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1180,
+        1160
+      ],
+      "id": "b9566dcd-5c3b-44db-b336-9d42bbe1defb",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "161922d1-0bb5-46ef-90fd-b285ef17f9c2",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9074c55c-023a-443c-aec9-7b9810faf524",
+              "name": "createdTime",
+              "value": "={{ $json.createdTime }}",
+              "type": "string"
+            },
+            {
+              "id": "dcf3a084-3605-48e5-a267-c0eb1d215900",
+              "name": "Name",
+              "value": "={{ $json.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "7d27eb4f-e7d8-4e2e-86e4-c0073c247b4d",
+              "name": "Automation",
+              "value": "={{ $json.Automation }}",
+              "type": "string"
+            },
+            {
+              "id": "2ba3d82e-35ae-4c45-a6cd-a278c6acc2eb",
+              "name": "Users",
+              "value": "={{ $json.Users.join(\", \") }}",
+              "type": "string"
+            },
+            {
+              "id": "b1a651a7-45ef-4149-bb49-454d89de5d88",
+              "name": "email",
+              "value": "={{ $json['email (from Users)'].join(\", \") }}",
+              "type": "string"
+            },
+            {
+              "id": "376b3fbd-9ac1-4e8b-8cd8-c0e9f410badb",
+              "name": "Name ",
+              "value": "={{ $json['Name (from Users)'].join(\", \") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1660,
+        980
+      ],
+      "id": "00c6eae2-189a-4919-8341-d4ae0a650454",
+      "name": "format Fields"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app2OBE1J2kRRZNMM",
+          "mode": "list",
+          "cachedResultName": "Effibotics CRM",
+          "cachedResultUrl": "https://airtable.com/app2OBE1J2kRRZNMM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $json.table }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1500,
+        1160
+      ],
+      "id": "7ea2085a-d7a4-40db-b355-1065dafa3b19",
+      "name": "get table1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1880,
+        1160
+      ],
+      "id": "1c16c923-9d00-41a1-b221-9d6da82f7c7d",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "161922d1-0bb5-46ef-90fd-b285ef17f9c2",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9074c55c-023a-443c-aec9-7b9810faf524",
+              "name": "createdTime",
+              "value": "={{ $json.createdTime }}",
+              "type": "string"
+            },
+            {
+              "id": "dcf3a084-3605-48e5-a267-c0eb1d215900",
+              "name": "Name",
+              "value": "={{ $json.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "7d27eb4f-e7d8-4e2e-86e4-c0073c247b4d",
+              "name": "Automation",
+              "value": "={{ $json.Automation }}",
+              "type": "string"
+            },
+            {
+              "id": "2ba3d82e-35ae-4c45-a6cd-a278c6acc2eb",
+              "name": "Users",
+              "value": "={{ $json.Users.join(\", \") }}",
+              "type": "string"
+            },
+            {
+              "id": "b1a651a7-45ef-4149-bb49-454d89de5d88",
+              "name": "email",
+              "value": "={{ $json['email (from Users)'].join(\", \") }}",
+              "type": "string"
+            },
+            {
+              "id": "376b3fbd-9ac1-4e8b-8cd8-c0e9f410badb",
+              "name": "Name ",
+              "value": "={{ $json['Name (from Users)'].join(\", \") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        1160
+      ],
+      "id": "98043cd9-a670-4e38-a89e-7ab26e17c3d9",
+      "name": "format Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app2OBE1J2kRRZNMM",
+          "mode": "list",
+          "cachedResultName": "Effibotics CRM",
+          "cachedResultUrl": "https://airtable.com/app2OBE1J2kRRZNMM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $json.table }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1500,
+        1340
+      ],
+      "id": "17555d8c-3109-43c8-975f-40ea3c61ecc1",
+      "name": "get table2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1880,
+        1340
+      ],
+      "id": "37331d8c-938d-4c4f-9e19-adcc0abd81a1",
+      "name": "Convert to File2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "161922d1-0bb5-46ef-90fd-b285ef17f9c2",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9074c55c-023a-443c-aec9-7b9810faf524",
+              "name": "createdTime",
+              "value": "={{ $json.createdTime }}",
+              "type": "string"
+            },
+            {
+              "id": "dcf3a084-3605-48e5-a267-c0eb1d215900",
+              "name": "Name",
+              "value": "={{ $json.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "7d27eb4f-e7d8-4e2e-86e4-c0073c247b4d",
+              "name": "Automation",
+              "value": "={{ $json.Automation }}",
+              "type": "string"
+            },
+            {
+              "id": "2ba3d82e-35ae-4c45-a6cd-a278c6acc2eb",
+              "name": "Users",
+              "value": "={{ $json.Users.join(\", \") }}",
+              "type": "string"
+            },
+            {
+              "id": "b1a651a7-45ef-4149-bb49-454d89de5d88",
+              "name": "email",
+              "value": "={{ $json['email (from Users)'].join(\", \") }}",
+              "type": "string"
+            },
+            {
+              "id": "376b3fbd-9ac1-4e8b-8cd8-c0e9f410badb",
+              "name": "Name ",
+              "value": "={{ $json['Name (from Users)'].join(\", \") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        1340
+      ],
+      "id": "c97f5ccd-ae0d-4237-a447-3fc4d85fe6f1",
+      "name": "format Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "505c1e17-5d25-47dd-9377-6e75c9f165b6",
+              "name": "table",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "17925a2d-4639-41b1-abd6-3b7ce969e6c8",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "3116d661-af49-4d74-9b7b-cd85f8a25883",
+              "name": "primaryFieldId",
+              "value": "={{ $json.primaryFieldId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        860,
+        1160
+      ],
+      "id": "e5fcb45f-ba94-4828-ae33-440fc9fe9922",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "content": "## Setup\n\n1. On `Base schema` , set up the base you need to export\n\n2. Set the fields to exclude only whats relevant\n3. Edit the `SWITHCH` to route the data accordingly., Each table wil have a different schema and needs be mapped on its own\n\n3. When mapping the `Format Fields` nodes, add a `.join(\", \")` for all items with an array with the output as a `string` \n\n4. Convert to file and dowload",
+        "height": 380,
+        "width": 460,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        540,
+        700
+      ],
+      "typeVersion": 1,
+      "id": "f4542759-0f12-4975-9cbe-3e9ebc00ce97",
+      "name": "Sticky Note1"
     }
   ],
   "connections": {
@@ -631,6 +1118,141 @@
           }
         ]
       ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "base schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "base schema": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get table": {
+      "main": [
+        [
+          {
+            "node": "format Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "get table",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "get table1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "get table2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get table1": {
+      "main": [
+        [
+          {
+            "node": "format Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format Fields1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get table2": {
+      "main": [
+        [
+          {
+            "node": "format Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format Fields2": {
+      "main": [
+        [
+          {
+            "node": "Convert to File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -641,7 +1263,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "c1680eb7-a1b5-46fb-904a-1b56b6398566",
+  "versionId": "6bf082eb-b4e7-4a5e-a162-297126a75bf7",
   "triggerCount": 0,
   "tags": [
     {
