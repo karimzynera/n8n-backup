@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-19T13:23:28.982Z",
-  "updatedAt": "2025-01-25T20:11:54.000Z",
+  "updatedAt": "2025-01-25T20:41:05.000Z",
   "id": "JQavbq9uzigZ2b3Z",
   "name": "⚙️—Make/n8n GitHub Backup",
   "active": true,
@@ -182,39 +182,6 @@
     },
     {
       "parameters": {
-        "resource": "file",
-        "owner": {
-          "__rl": true,
-          "value": "=karimzynera",
-          "mode": "name"
-        },
-        "repository": {
-          "__rl": true,
-          "value": "=n8n-backup",
-          "mode": "name"
-        },
-        "filePath": "=workflows/{{ $json.workflowId }}.json",
-        "fileContent": "={{ $json.formattedJson }}",
-        "commitMessage": "=\"{{ $json.workflowName }}\" last edited @ {{ $now }}"
-      },
-      "type": "n8n-nodes-base.github",
-      "typeVersion": 1,
-      "position": [
-        1680,
-        180
-      ],
-      "id": "8a53e0f7-deac-4152-9168-63ac83034140",
-      "name": "Update File2",
-      "credentials": {
-        "githubApi": {
-          "id": "w9OVe7EajLtOxQ5D",
-          "name": "Karim's GitHub account "
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -371,6 +338,39 @@
       "id": "74e3340d-8fc4-439e-9087-3463e1346148",
       "name": "Get Make Scenario Blueprint",
       "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "=karimzynera",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "=n8n-backup",
+          "mode": "name"
+        },
+        "filePath": "=workflows/{{ $json.workflowId }}.json",
+        "fileContent": "={{ $json.formattedJson }}",
+        "commitMessage": "=\"{{ $json.workflowName }}\" last edited @ {{ $now }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        180
+      ],
+      "id": "8a53e0f7-deac-4152-9168-63ac83034140",
+      "name": "Create File1",
+      "credentials": {
+        "githubApi": {
+          "id": "w9OVe7EajLtOxQ5D",
+          "name": "Karim's GitHub account "
+        }
+      },
+      "onError": "continueErrorOutput"
     }
   ],
   "connections": {
@@ -440,7 +440,7 @@
         [],
         [
           {
-            "node": "Update File2",
+            "node": "Create File1",
             "type": "main",
             "index": 0
           }
@@ -518,7 +518,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "b0288e09-406b-4354-bf78-dc6c0818d8fb",
+  "versionId": "c04aebab-165e-462b-b8a7-bc52c61f25c9",
   "triggerCount": 1,
   "tags": []
 }
