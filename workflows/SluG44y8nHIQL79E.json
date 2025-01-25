@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-25T21:01:03.179Z",
-  "updatedAt": "2025-01-25T21:01:03.179Z",
+  "updatedAt": "2025-01-25T21:24:00.000Z",
   "id": "SluG44y8nHIQL79E",
   "name": "My workflow 2",
   "active": false,
@@ -17,11 +17,281 @@
         0
       ],
       "id": "6bdef46c-5018-4cbf-a946-6620ac49a7ce",
-      "name": "Webhook",
+      "name": "Fireflies Completion",
       "webhookId": "7435376a-dae4-4588-81ee-768b06e1d7d9"
+    },
+    {
+      "parameters": {
+        "authentication": "customAuth",
+        "requestMethod": "GET",
+        "endpoint": "https://api.fireflies.ai/graphql",
+        "query": "query {\n  transcript(id: \"za1AOi6gkkJslBLw\") {\n    id\n    title\n    user {\n      email\n    }\n    transcript_url\n    meeting_attendees {\n      email\n    }\n    duration\n    dateString\n    summary {\n      action_items\n      outline\n      overview\n      shorthand_bullet\n      gist\n      bullet_gist\n      short_summary\n    }\n  }\n}"
+      },
+      "type": "n8n-nodes-base.graphql",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "ed6ad7ff-e4eb-4d49-8e40-565929db1492",
+      "name": "GraphQL",
+      "retryOnFail": true,
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "RK4IKnv1DaBSzmQf",
+          "name": "Fireflies"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        140
+      ],
+      "id": "a690f4b2-b125-44b5-8ee5-625db1afec78",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldLIF2jloEkLb7l",
+          "mode": "list",
+          "cachedResultName": "Recordings",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM/tbldLIF2jloEkLb7l"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Duration": "={{ $json.data.transcript.duration }}",
+            "Date": "={{ $json.data.transcript.dateString }}",
+            "Title": "={{ $json.data.transcript.title }}",
+            "Link": "={{ $json.data.transcript.transcript_url }}",
+            "Action Items": "={{ $json.data.transcript.summary.action_items }}",
+            "Overview": "={{ $json.data.transcript.summary.overview }}",
+            "Shorthand Bullet": "={{ $json.data.transcript.summary.shorthand_bullet }}",
+            "Gist": "={{ $json.data.transcript.summary.gist }}",
+            "Bullet Gist": "={{ $json.data.transcript.summary.bullet_gist }}",
+            "Summary": "={{ $json.data.transcript.summary.short_summary }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Meetings",
+              "displayName": "Meetings",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Participants",
+              "displayName": "Participants",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Overview",
+              "displayName": "Overview",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Shorthand Bullet",
+              "displayName": "Shorthand Bullet",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gist",
+              "displayName": "Gist",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Bullet Gist",
+              "displayName": "Bullet Gist",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Action Items",
+              "displayName": "Action Items",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created at",
+              "displayName": "Created at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "bb95b338-98f6-466f-9822-583f3311887f",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
     }
   ],
-  "connections": {},
+  "connections": {
+    "Fireflies Completion": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "GraphQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GraphQL": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -30,7 +300,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "be85c541-53e6-4531-a95f-e8eb96f931b9",
+  "versionId": "e3394099-b09b-486e-99b2-ff51b195e916",
   "triggerCount": 0,
   "tags": []
 }
