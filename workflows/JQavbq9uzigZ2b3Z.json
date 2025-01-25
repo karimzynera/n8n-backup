@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-19T13:23:28.982Z",
-  "updatedAt": "2025-01-20T23:15:21.000Z",
+  "updatedAt": "2025-01-25T20:08:13.000Z",
   "id": "JQavbq9uzigZ2b3Z",
   "name": "⚙️—Make Backup Blueprint",
   "active": true,
@@ -83,7 +83,8 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes"
+              "field": "minutes",
+              "minutesInterval": 1
             }
           ]
         }
@@ -1378,7 +1379,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "b28df198-e8d6-4c87-9ca5-86829fc25a33",
+  "versionId": "51ac2957-3123-422b-8d4a-ed4ddae3c7a6",
   "triggerCount": 2,
   "tags": []
 }
