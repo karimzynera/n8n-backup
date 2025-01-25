@@ -1,0 +1,803 @@
+{
+  "createdAt": "2025-01-25T19:12:54.162Z",
+  "updatedAt": "2025-01-25T19:14:31.000Z",
+  "id": "NzCBrdb6yeNUZukE",
+  "name": "My workflow",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.content.base64Decode() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        -100
+      ],
+      "id": "c0fded1d-9479-4109-bf90-9869eaef5845",
+      "name": "Edit Fields",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "flow",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        800,
+        -100
+      ],
+      "id": "4842ffff-4934-4862-8b9b-6b7948e59420",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1af3fadd-45a1-4bb4-837b-1de0c99d5e6e",
+              "leftValue": "={{ $json.module }}",
+              "rightValue": "airtable",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1160,
+        -100
+      ],
+      "id": "70e3fd11-4415-4ab5-8e72-7e65beadf335",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "expect",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        -100
+      ],
+      "id": "6c5d0cac-6d1f-48f3-9791-ef38537b96be",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "expect.spec",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        -100
+      ],
+      "id": "d1c0a66f-b7c2-4cc6-b84f-817431a0b5d6",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a493c444-210d-4343-b5d5-fc7cb7aecdb2",
+              "name": "table",
+              "value": "={{ $json.table }}",
+              "type": "string"
+            },
+            {
+              "id": "f0b6feee-788a-4c5a-b1ec-f1a1869f0d6b",
+              "name": "Scenario",
+              "value": "={{ $json.concatenated_name.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "0d9f7a32-595a-45c6-afbd-51f01d2860a2",
+              "name": "action",
+              "value": "={{ $json.concatenated_module.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "e95a7e1e-f233-4593-a2bf-6385bc760738",
+              "name": "base_id",
+              "value": "={{ $json.concatenated_mapper_base.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "745c0f18-9f01-475f-a14e-bc6b12ee0d38",
+              "name": "base name",
+              "value": "={{ $json.concatenated_BASE_name .split(\",\" ) .unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "a2d36786-7da1-4162-bf0c-1d3e5705175e",
+              "name": "field name",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_label'].split(\",\" ) .unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "e71eafc9-56b5-4293-b267-1baa5a6af9b5",
+              "name": "type",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_type'] .split(\",\" )  }}",
+              "type": "array"
+            },
+            {
+              "id": "8350ca5f-5476-4c33-a889-86a7a82b8567",
+              "name": "field id",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_name'] .split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "dd14528c-bfa5-4a8e-816e-9e7b129e4446",
+              "name": "concatenated_scenario_name",
+              "value": "={{ $json.concatenated_scenario_name.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "ae42b9d7-2183-42e7-84e5-e0fc5389751e",
+              "name": "url",
+              "value": "={{ $json.concatenated_url.split(\",\" ).unique() }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1860,
+        -220
+      ],
+      "id": "a6403f85-475d-4808-9589-f483b22228ba",
+      "name": "table and data"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "list",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $json.user }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $json['repo-path'] }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        120,
+        -100
+      ],
+      "id": "15e4a64e-3d3d-4462-8462-9a905848016f",
+      "name": "List files",
+      "credentials": {
+        "githubApi": {
+          "id": "w9OVe7EajLtOxQ5D",
+          "name": "Karim's GitHub account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields1').item.json.user }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields1').item.json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $json.path }}",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        300,
+        -100
+      ],
+      "id": "8d3a64c1-2de4-40c9-92aa-f73e3667a005",
+      "name": "Get scenarios",
+      "credentials": {
+        "githubApi": {
+          "id": "w9OVe7EajLtOxQ5D",
+          "name": "Karim's GitHub account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f5152ed5-4069-4170-b359-1250d3a58cca",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "0f99c3a9-2183-4750-b54b-4063e79e71ac",
+              "name": "module",
+              "value": "={{ $json.flow.module }}",
+              "type": "string"
+            },
+            {
+              "id": "85055e59-0751-4b55-a6f8-e4ac9391fd12",
+              "name": "id",
+              "value": "={{ $json.flow.id }}",
+              "type": "number"
+            },
+            {
+              "id": "7ca47ec7-3235-4fa3-80c2-8809e057ee95",
+              "name": "parameters",
+              "value": "={{ $json.flow.parameters }}",
+              "type": "object"
+            },
+            {
+              "id": "4bd27268-01dd-4f68-8e80-62a638333aff",
+              "name": "mapper_base",
+              "value": "={{ $json.flow.mapper.base }}",
+              "type": "string"
+            },
+            {
+              "id": "3372f152-7bed-432d-b414-106d48a71c4b",
+              "name": "table",
+              "value": "={{ $json.flow.mapper.table }}",
+              "type": "string"
+            },
+            {
+              "id": "76ee229e-b9d2-4394-845a-591ab3544ff4",
+              "name": "record",
+              "value": "={{ $json.flow.mapper.record }}",
+              "type": "string"
+            },
+            {
+              "id": "3561e26e-5d8b-4e32-b3cb-d98575ffb4a6",
+              "name": "BASE name",
+              "value": "={{ $json.flow.metadata.restore.expect.base.label }}",
+              "type": "string"
+            },
+            {
+              "id": "0a6f787e-5069-480b-ac5e-5a652f7f8be7",
+              "name": "parameters",
+              "value": "={{ $json.flow.metadata.parameters }}",
+              "type": "array"
+            },
+            {
+              "id": "e14e19a4-0cc4-4eaf-93d5-db864093b634",
+              "name": "expect",
+              "value": "={{ $json.flow.metadata.expect }}",
+              "type": "array"
+            },
+            {
+              "id": "7c774e23-1547-4fac-88a5-bafc09228819",
+              "name": "scenario_name",
+              "value": "={{ $json.scenario_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2a2da731-0173-4474-97f2-4e2d825dca4d",
+              "name": "url",
+              "value": "=https://{{ $json.metadata.zone }}/scenarios/{{ $('Edit Fields1').item.json.organization_id }}/{{ $json.scenario_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        -100
+      ],
+      "id": "f7bf658b-d4cf-4bdc-99b6-b05ac715e587",
+      "name": "map out fields"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "concatenate",
+              "field": "name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "module"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "mapper_base"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "BASE name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "expect"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].label"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].type"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "scenario_name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "url"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "table",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        -100
+      ],
+      "id": "089cdd5e-2bdf-4b31-82da-05f3ad699684",
+      "name": "Concatenate "
+    },
+    {
+      "parameters": {
+        "content": "## Setup\n\n1. Set up your username, github repo and username\n\n2. on the Github nodes set up your credentials \n\n3. Update the `GET BASE` Schema credentials and airtable credentials\n\n4. Update the credential on the `Create Comment` node to match your setup\n\nRun and test the setup",
+        "height": 260,
+        "width": 800,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        140,
+        -420
+      ],
+      "typeVersion": 1,
+      "id": "fdfcec66-f802-407b-8816-7ece902fff3f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9faa4763-13fc-401b-9739-65c3d06a9801",
+              "name": "user",
+              "value": "karimzynera",
+              "type": "string"
+            },
+            {
+              "id": "17b7b7c2-39dc-4663-86af-e9cdb7109b8d",
+              "name": "repo",
+              "value": "make-backup",
+              "type": "string"
+            },
+            {
+              "id": "38dd7309-9906-4363-b0f8-b697b4b07b71",
+              "name": "repo-path",
+              "value": "scenarios",
+              "type": "string"
+            },
+            {
+              "id": "790d3403-fdcf-4a64-abc4-319bfe5479b3",
+              "name": "organization_id",
+              "value": "277690",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -40,
+        -100
+      ],
+      "id": "a616ad34-33d0-4821-9d0c-585cd548b296",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "['field id'], type",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        -220
+      ],
+      "id": "5bf941fb-4e17-4b9e-9b57-5acc4ac97263",
+      "name": "Split Out3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d528ad2-671e-4ae6-b650-32662d76158b",
+              "name": "scenario_name",
+              "value": "={{ $('List files').item.json.name.replaceAll(\".json\", \"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        620,
+        -100
+      ],
+      "id": "636ba9de-3c3c-4203-bb84-4933414c4b13",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -100
+      ],
+      "id": "295fc988-d971-4d28-83a3-4b2756b77494",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3648a04c-8f4f-400e-9093-107b2a462ebe",
+              "name": "url",
+              "value": "={{ \"https://\" + $('Edit Fields').item.json.metadata.zone }}/{{ $('Edit Fields1').item.json['organization_id'] + \"/scenarios/\" + $json.concatenated_scenario_name.split(\",\" ).unique()  }}",
+              "type": "string"
+            },
+            {
+              "id": "8fc6499a-9c83-475d-b76c-2c88f7e403d4",
+              "name": "table",
+              "value": "={{ $json.table }}",
+              "type": "string"
+            },
+            {
+              "id": "889b57a5-7f3e-4a1c-818a-8fd74b55cf9a",
+              "name": "base_id",
+              "value": "={{ $json.base_id[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "c3ca36b9-8bc5-438c-945f-9e322b1ae819",
+              "name": "field id",
+              "value": "={{ $json['[\\'field id\\']'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        80,
+        160
+      ],
+      "id": "73a130b3-5137-4f7a-8a2a-c4ed4b19285c",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "80d8456e-4c80-444a-a6dd-a65bfaa39b39",
+              "name": "table",
+              "value": "={{ $json.table }}",
+              "type": "string"
+            },
+            {
+              "id": "69d04960-4555-493e-809c-6928bae513fc",
+              "name": "base_id",
+              "value": "={{ $json.base_id[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "48af7c97-446a-4af0-ba82-68dde67d3ec0",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "array"
+            },
+            {
+              "id": "a8d22bb4-3022-43cb-b8e6-79183f3ba984",
+              "name": "field id",
+              "value": "={{ $json['[\\'field id\\']'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2200,
+        -220
+      ],
+      "id": "ecc2072a-9261-4c0d-ac20-aefb891280df",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/meta/bases/{{ $('table and data').item.json.base_id[0] }}/tables/{{ $json.table }}/fields/{{ $json['field id'] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "description",
+              "value": "=Field used on scenarios below {{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2380,
+        -220
+      ],
+      "id": "81d2ec20-17b3-4055-94ba-1e59bbbb9a99",
+      "name": "update field",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "map out fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Concatenate ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "table and data": {
+      "main": [
+        [
+          {
+            "node": "Split Out3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List files": {
+      "main": [
+        [
+          {
+            "node": "Get scenarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get scenarios": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "map out fields": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Concatenate ": {
+      "main": [
+        [
+          {
+            "node": "table and data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "List files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "update field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "c0fded54-2611-4d7c-bf6e-fba7097de61f",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-01-21T15:37:29.012Z",
+      "updatedAt": "2025-01-21T15:37:29.012Z",
+      "id": "NXbhUU6d2f5ViDC2",
+      "name": "Client"
+    }
+  ]
+}
