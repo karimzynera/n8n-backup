@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-21T15:38:13.226Z",
-  "updatedAt": "2025-01-21T20:07:56.000Z",
+  "updatedAt": "2025-01-25T19:11:38.000Z",
   "id": "ueXo8Gnp8gWoqfFH",
   "name": "Zacharia's Work",
   "active": false,
@@ -1452,6 +1452,638 @@
       ],
       "id": "106354d5-80e3-4160-a272-c6e4d01910b5",
       "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "={{ $json.A }}",
+              "field2": "={{ $json.B }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        340,
+        1640
+      ],
+      "id": "09bbc7a6-742f-4f15-8660-d8c2cf001b60",
+      "name": "Compare Datasets"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f4c3b13-6dc5-484c-a4bc-08494767b8d5",
+              "name": "A",
+              "value": "[             \"recDuBCierct90D3d\",             \"recKYnyyPfXy5bmIL\",             \"recdV05Qtfs4mkzcF\"         ]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        40,
+        1600
+      ],
+      "id": "255a2d4e-064f-46a3-98d9-6e4c6d07d216",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad89fab5-cfc7-4932-a403-922b074ca3b5",
+              "name": "B",
+              "value": "[             \"recDuBCierct90D3d\",             \"recKYnyyPfXy5bmIL\"         ]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        20,
+        1760
+      ],
+      "id": "59beace5-5774-4f08-a477-dd9e0c00e655",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/meta/bases/{{ $('table and data1').item.json.base_id[0] }}/tables/{{ $json.table }}/fields/{{ $json['field id'] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "description",
+              "value": "=Field used on scenarios below {{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2020,
+        1920
+      ],
+      "id": "3a9ac1a1-a768-4bc8-a273-e92f57ee8d29",
+      "name": "update field"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.content.base64Decode() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        100,
+        2040
+      ],
+      "id": "146eefb5-8823-44f0-a00b-9169edb5e6f3",
+      "name": "Edit Fields8",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1af3fadd-45a1-4bb4-837b-1de0c99d5e6e",
+              "leftValue": "={{ $json.module }}",
+              "rightValue": "airtable",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        2040
+      ],
+      "id": "792db081-ad42-48e1-b09c-c6da74417701",
+      "name": "Filter2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "expect",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        980,
+        2040
+      ],
+      "id": "45a99c48-53a4-4951-8192-d056303ab2cf",
+      "name": "Split Out7"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "expect.spec",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        2040
+      ],
+      "id": "d565adf2-2594-436d-8726-17780fbfb0dd",
+      "name": "Split Out8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a493c444-210d-4343-b5d5-fc7cb7aecdb2",
+              "name": "table",
+              "value": "={{ $json.table }}",
+              "type": "string"
+            },
+            {
+              "id": "f0b6feee-788a-4c5a-b1ec-f1a1869f0d6b",
+              "name": "Scenario",
+              "value": "={{ $json.concatenated_name.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "0d9f7a32-595a-45c6-afbd-51f01d2860a2",
+              "name": "action",
+              "value": "={{ $json.concatenated_module.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "e95a7e1e-f233-4593-a2bf-6385bc760738",
+              "name": "base_id",
+              "value": "={{ $json.concatenated_mapper_base.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "745c0f18-9f01-475f-a14e-bc6b12ee0d38",
+              "name": "base name",
+              "value": "={{ $json.concatenated_BASE_name .split(\",\" ) .unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "a2d36786-7da1-4162-bf0c-1d3e5705175e",
+              "name": "field name",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_label'].split(\",\" ) .unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "e71eafc9-56b5-4293-b267-1baa5a6af9b5",
+              "name": "type",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_type'] .split(\",\" )  }}",
+              "type": "array"
+            },
+            {
+              "id": "8350ca5f-5476-4c33-a889-86a7a82b8567",
+              "name": "field id",
+              "value": "={{ $json['concatenated_\\'expect_spec\\'_name'] .split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "dd14528c-bfa5-4a8e-816e-9e7b129e4446",
+              "name": "concatenated_scenario_name",
+              "value": "={{ $json.concatenated_scenario_name.split(\",\" ).unique() }}",
+              "type": "array"
+            },
+            {
+              "id": "ae42b9d7-2183-42e7-84e5-e0fc5389751e",
+              "name": "url",
+              "value": "={{ $json.concatenated_url.split(\",\" ).unique() }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        2040
+      ],
+      "id": "fcf70b02-f93c-48da-86c1-d7fad6bbedb5",
+      "name": "table and data1"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "list",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $json.user }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $json['repo-path'] }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        2040
+      ],
+      "id": "d5274a84-392e-4259-8776-f38045152777",
+      "name": "List files2"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields9').item.json.user }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields9').item.json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $json.path }}",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        2040
+      ],
+      "id": "5e8d1e18-2d89-4b35-b427-6de53433080d",
+      "name": "Get scenarios2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f5152ed5-4069-4170-b359-1250d3a58cca",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "0f99c3a9-2183-4750-b54b-4063e79e71ac",
+              "name": "module",
+              "value": "={{ $json.flow.module }}",
+              "type": "string"
+            },
+            {
+              "id": "85055e59-0751-4b55-a6f8-e4ac9391fd12",
+              "name": "id",
+              "value": "={{ $json.flow.id }}",
+              "type": "number"
+            },
+            {
+              "id": "7ca47ec7-3235-4fa3-80c2-8809e057ee95",
+              "name": "parameters",
+              "value": "={{ $json.flow.parameters }}",
+              "type": "object"
+            },
+            {
+              "id": "4bd27268-01dd-4f68-8e80-62a638333aff",
+              "name": "mapper_base",
+              "value": "={{ $json.flow.mapper.base }}",
+              "type": "string"
+            },
+            {
+              "id": "3372f152-7bed-432d-b414-106d48a71c4b",
+              "name": "table",
+              "value": "={{ $json.flow.mapper.table }}",
+              "type": "string"
+            },
+            {
+              "id": "76ee229e-b9d2-4394-845a-591ab3544ff4",
+              "name": "record",
+              "value": "={{ $json.flow.mapper.record }}",
+              "type": "string"
+            },
+            {
+              "id": "3561e26e-5d8b-4e32-b3cb-d98575ffb4a6",
+              "name": "BASE name",
+              "value": "={{ $json.flow.metadata.restore.expect.base.label }}",
+              "type": "string"
+            },
+            {
+              "id": "0a6f787e-5069-480b-ac5e-5a652f7f8be7",
+              "name": "parameters",
+              "value": "={{ $json.flow.metadata.parameters }}",
+              "type": "array"
+            },
+            {
+              "id": "e14e19a4-0cc4-4eaf-93d5-db864093b634",
+              "name": "expect",
+              "value": "={{ $json.flow.metadata.expect }}",
+              "type": "array"
+            },
+            {
+              "id": "7c774e23-1547-4fac-88a5-bafc09228819",
+              "name": "scenario_name",
+              "value": "={{ $json.scenario_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2a2da731-0173-4474-97f2-4e2d825dca4d",
+              "name": "url",
+              "value": "=https://{{ $json.metadata.zone }}/scenarios/{{ $('Edit Fields9').item.json.organization_id }}/{{ $json.scenario_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        600,
+        2040
+      ],
+      "id": "58a6f4cc-3631-4739-a852-6f6fdbc3a794",
+      "name": "map out fields1"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "concatenate",
+              "field": "name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "module"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "mapper_base"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "BASE name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "expect"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].label"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "['expect.spec'].type"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "scenario_name"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "url"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "table",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        2040
+      ],
+      "id": "f4464d41-8b55-4691-9484-5739cb939b09",
+      "name": "Concatenate 2"
+    },
+    {
+      "parameters": {
+        "content": "## Setup\n\n1. Set up your username, github repo and username\n\n2. on the Github nodes set up your credentials \n\n3. Update the `GET BASE` Schema credentials and airtable credentials\n\n4. Update the credential on the `Create Comment` node to match your setup\n\nRun and test the setup",
+        "height": 260,
+        "width": 800,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -220,
+        1720
+      ],
+      "typeVersion": 1,
+      "id": "20abadb4-f14e-4055-bc4d-9f751d3ab90d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9faa4763-13fc-401b-9739-65c3d06a9801",
+              "name": "user",
+              "value": "imperol3",
+              "type": "string"
+            },
+            {
+              "id": "17b7b7c2-39dc-4663-86af-e9cdb7109b8d",
+              "name": "repo",
+              "value": "n8n-repo",
+              "type": "string"
+            },
+            {
+              "id": "38dd7309-9906-4363-b0f8-b697b4b07b71",
+              "name": "repo-path",
+              "value": "make",
+              "type": "string"
+            },
+            {
+              "id": "790d3403-fdcf-4a64-abc4-319bfe5479b3",
+              "name": "organization_id",
+              "value": "651067",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -400,
+        2040
+      ],
+      "id": "8593562a-1957-4d53-9cec-50dd48bce247",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "flow",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        440,
+        2040
+      ],
+      "id": "df4d8afb-5fd9-4ddf-880a-5fd22c9bc9c7",
+      "name": "Split Out9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d528ad2-671e-4ae6-b650-32662d76158b",
+              "name": "scenario_name",
+              "value": "={{ $('List files2').item.json.name.replaceAll(\".json\", \"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        2040
+      ],
+      "id": "6e21d144-88bd-4128-aff6-fd84192e2c4b",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3648a04c-8f4f-400e-9093-107b2a462ebe",
+              "name": "url",
+              "value": "={{ \"https://\" + $('Edit Fields8').item.json.metadata.zone }}/{{ $('Edit Fields9').item.json['organization_id'] + \"/scenarios/\" + $json.concatenated_scenario_name.split(\",\" ).unique()  }}",
+              "type": "string"
+            },
+            {
+              "id": "8fc6499a-9c83-475d-b76c-2c88f7e403d4",
+              "name": "table",
+              "value": "={{ $json.table }}",
+              "type": "string"
+            },
+            {
+              "id": "889b57a5-7f3e-4a1c-818a-8fd74b55cf9a",
+              "name": "base_id",
+              "value": "={{ $json.base_id[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "c3ca36b9-8bc5-438c-945f-9e322b1ae819",
+              "name": "field id",
+              "value": "={{ $json['[\\'field id\\']'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1240,
+        2320
+      ],
+      "id": "dbe1f750-cbeb-452a-bbb9-a6cf7a1d07a9",
+      "name": "Edit Fields11"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "80d8456e-4c80-444a-a6dd-a65bfaa39b39",
+              "name": "table",
+              "value": "={{ $json.table }}",
+              "type": "string"
+            },
+            {
+              "id": "69d04960-4555-493e-809c-6928bae513fc",
+              "name": "base_id",
+              "value": "={{ $json.base_id[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "48af7c97-446a-4af0-ba82-68dde67d3ec0",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "array"
+            },
+            {
+              "id": "a8d22bb4-3022-43cb-b8e6-79183f3ba984",
+              "name": "field id",
+              "value": "={{ $json['[\\'field id\\']'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1840,
+        1920
+      ],
+      "id": "93bdc46f-2d96-49f2-a0c3-e2ec92f0151d",
+      "name": "Edit Fields12"
     }
   ],
   "connections": {
@@ -1864,6 +2496,171 @@
           }
         ]
       ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter2": {
+      "main": [
+        [
+          {
+            "node": "Split Out7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out7": {
+      "main": [
+        [
+          {
+            "node": "Split Out8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out8": {
+      "main": [
+        [
+          {
+            "node": "Concatenate 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "table and data1": {
+      "main": [
+        [
+          {
+            "node": "Split Out9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List files2": {
+      "main": [
+        [
+          {
+            "node": "Get scenarios2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get scenarios2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "map out fields1": {
+      "main": [
+        [
+          {
+            "node": "Filter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Concatenate 2": {
+      "main": [
+        [
+          {
+            "node": "table and data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "List files2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out9": {
+      "main": [
+        [
+          {
+            "node": "map out fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "Split Out9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields12": {
+      "main": [
+        [
+          {
+            "node": "update field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1874,7 +2671,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9e60eb39-a7eb-4e42-9d0e-cb067c80b626",
+  "versionId": "d4b6e47d-b809-42f1-94ee-ea993e600be4",
   "triggerCount": 0,
   "tags": [
     {
