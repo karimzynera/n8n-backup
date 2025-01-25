@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-19T13:23:28.982Z",
-  "updatedAt": "2025-01-25T20:51:25.000Z",
+  "updatedAt": "2025-01-25T21:24:23.000Z",
   "id": "JQavbq9uzigZ2b3Z",
   "name": "⚙️—Make/n8n GitHub Backup",
   "active": true,
@@ -10,8 +10,7 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 1
+              "field": "hours"
             }
           ]
         }
@@ -503,7 +502,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "3e697a4b-2e66-4257-90fd-f27e87152ba2",
+  "versionId": "df21288f-5512-48c0-93f2-ed7bf406c374",
   "triggerCount": 1,
   "tags": []
 }
