@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-25T19:12:54.162Z",
-  "updatedAt": "2025-01-25T19:31:10.000Z",
+  "updatedAt": "2025-01-25T20:30:22.000Z",
   "id": "NzCBrdb6yeNUZukE",
   "name": "My workflow",
   "active": false,
@@ -259,7 +259,7 @@
           "parameters": [
             {
               "name": "description",
-              "value": "=Field used on scenarios below {{ $json.url }}"
+              "value": "=🤖 This field is used on the scenarios below: {{ $json.url }}"
             }
           ]
         },
@@ -762,7 +762,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "b5ebd4b7-2eed-4a27-adf7-f048ad621b8c",
+  "versionId": "1f32f5e0-a529-4cf3-8117-b25974ea3ebb",
   "triggerCount": 0,
   "tags": [
     {
