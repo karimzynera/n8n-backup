@@ -1,12 +1,24 @@
 {
   "createdAt": "2025-01-25T21:01:03.179Z",
-  "updatedAt": "2025-01-25T21:24:00.000Z",
+  "updatedAt": "2025-01-25T22:31:31.000Z",
   "id": "SluG44y8nHIQL79E",
-  "name": "My workflow 2",
+  "name": "🪰—Fireflies Recording",
   "active": false,
   "nodes": [
     {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -220
+      ],
+      "id": "a690f4b2-b125-44b5-8ee5-625db1afec78",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
       "parameters": {
+        "httpMethod": "POST",
         "path": "7435376a-dae4-4588-81ee-768b06e1d7d9",
         "options": {}
       },
@@ -17,42 +29,9 @@
         0
       ],
       "id": "6bdef46c-5018-4cbf-a946-6620ac49a7ce",
-      "name": "Fireflies Completion",
-      "webhookId": "7435376a-dae4-4588-81ee-768b06e1d7d9"
-    },
-    {
-      "parameters": {
-        "authentication": "customAuth",
-        "requestMethod": "GET",
-        "endpoint": "https://api.fireflies.ai/graphql",
-        "query": "query {\n  transcript(id: \"za1AOi6gkkJslBLw\") {\n    id\n    title\n    user {\n      email\n    }\n    transcript_url\n    meeting_attendees {\n      email\n    }\n    duration\n    dateString\n    summary {\n      action_items\n      outline\n      overview\n      shorthand_bullet\n      gist\n      bullet_gist\n      short_summary\n    }\n  }\n}"
-      },
-      "type": "n8n-nodes-base.graphql",
-      "typeVersion": 1,
-      "position": [
-        220,
-        0
-      ],
-      "id": "ed6ad7ff-e4eb-4d49-8e40-565929db1492",
-      "name": "GraphQL",
-      "retryOnFail": true,
-      "credentials": {
-        "httpCustomAuth": {
-          "id": "RK4IKnv1DaBSzmQf",
-          "name": "Fireflies"
-        }
-      }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -140,
-        140
-      ],
-      "id": "a690f4b2-b125-44b5-8ee5-625db1afec78",
-      "name": "When clicking ‘Test workflow’"
+      "name": "Fireflies",
+      "webhookId": "7435376a-dae4-4588-81ee-768b06e1d7d9",
+      "disabled": true
     },
     {
       "parameters": {
@@ -74,19 +53,311 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Duration": "={{ $json.data.transcript.duration }}",
+            "Duration": "={{ $json.data.transcript.duration * 60}}",
             "Date": "={{ $json.data.transcript.dateString }}",
             "Title": "={{ $json.data.transcript.title }}",
             "Link": "={{ $json.data.transcript.transcript_url }}",
-            "Action Items": "={{ $json.data.transcript.summary.action_items }}",
-            "Overview": "={{ $json.data.transcript.summary.overview }}",
-            "Shorthand Bullet": "={{ $json.data.transcript.summary.shorthand_bullet }}",
-            "Gist": "={{ $json.data.transcript.summary.gist }}",
-            "Bullet Gist": "={{ $json.data.transcript.summary.bullet_gist }}",
-            "Summary": "={{ $json.data.transcript.summary.short_summary }}"
+            "Action Items": "={{ $json.data.transcript.summary.action_items.trim() }}",
+            "Overview": "={{ $json.data.transcript.summary.overview.trim() }}",
+            "Shorthand Bullet": "={{ $json.data.transcript.summary.shorthand_bullet.trim() }}",
+            "Gist": "={{ $json.data.transcript.summary.gist.trim() }}",
+            "Bullet Gist": "={{ $json.data.transcript.summary.bullet_gist.trim() }}",
+            "Summary": "={{ $json.data.transcript.summary.short_summary }}",
+            "Participants": "={{ $json.data.transcript.meeting_attendees.sort().map(item => item.email).join(', ') }}"
           },
           "matchingColumns": [],
           "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Meetings",
+              "displayName": "Meetings",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Start (from Meetings)",
+              "displayName": "Start (from Meetings)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Meeting Checker",
+              "displayName": "Meeting Checker",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Participants",
+              "displayName": "Participants",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Recording ID",
+              "displayName": "Recording ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Overview",
+              "displayName": "Overview",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Shorthand Bullet",
+              "displayName": "Shorthand Bullet",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gist",
+              "displayName": "Gist",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Bullet Gist",
+              "displayName": "Bullet Gist",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Action Items",
+              "displayName": "Action Items",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created at",
+              "displayName": "Created at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Date (Automation)",
+              "displayName": "Date (Automation)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "bb95b338-98f6-466f-9822-583f3311887f",
+      "name": "Create Recording",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUIUJ2F6Me72Dju",
+          "mode": "list",
+          "cachedResultName": "Meetings",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM/tblUIUJ2F6Me72Dju"
+        },
+        "filterByFormula": "=AND(Title = '{{ $json.fields.Title }}', {Date (Automation)} = '{{ $json.fields['Date (Automation)'] }}')",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "ebdef9b5-95a5-4628-a09f-b5f9ec10d5a8",
+      "name": "Search Meeting",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldLIF2jloEkLb7l",
+          "mode": "list",
+          "cachedResultName": "Recordings",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM/tbldLIF2jloEkLb7l"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Create Recording').item.json.id }}",
+            "Meetings": "={{ [ $json[\"id\"] ] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
             {
               "id": "Name",
               "displayName": "Name",
@@ -239,7 +510,18 @@
               "display": true,
               "type": "string",
               "readOnly": true,
-              "removed": false
+              "removed": true
+            },
+            {
+              "id": "Date (Automation)",
+              "displayName": "Date (Automation)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -250,41 +532,92 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        440,
+        880,
         0
       ],
-      "id": "bb95b338-98f6-466f-9822-583f3311887f",
-      "name": "Airtable",
+      "id": "61e81a14-8532-4632-9064-8acaa3cc086e",
+      "name": "Update Recording",
       "credentials": {
         "airtableTokenApi": {
           "id": "f15vRM0yMsganWrF",
           "name": "Karim's Airtable account"
         }
       }
+    },
+    {
+      "parameters": {
+        "authentication": "customAuth",
+        "requestMethod": "GET",
+        "endpoint": "https://api.fireflies.ai/graphql",
+        "query": "=query {\n  transcript(id: \"{{ $json.body.meetingId }}7C5QytYXPVRH3H3Q\") {\n    id\n    title\n    user {\n      email\n    }\n    transcript_url\n    meeting_attendees {\n      email\n    }\n    duration\n    dateString\n    summary {\n      action_items\n      outline\n      overview\n      shorthand_bullet\n      gist\n      bullet_gist\n      short_summary\n    }\n  }\n}"
+      },
+      "type": "n8n-nodes-base.graphql",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "ed6ad7ff-e4eb-4d49-8e40-565929db1492",
+      "name": "Get Transcript",
+      "retryOnFail": true,
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "RK4IKnv1DaBSzmQf",
+          "name": "Fireflies"
+        }
+      }
     }
   ],
   "connections": {
-    "Fireflies Completion": {
-      "main": [
-        []
-      ]
-    },
     "When clicking ‘Test workflow’": {
       "main": [
         [
           {
-            "node": "GraphQL",
+            "node": "Get Transcript",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "GraphQL": {
+    "Fireflies": {
       "main": [
         [
           {
-            "node": "Airtable",
+            "node": "Get Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Recording": {
+      "main": [
+        [
+          {
+            "node": "Search Meeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Meeting": {
+      "main": [
+        [
+          {
+            "node": "Update Recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcript": {
+      "main": [
+        [
+          {
+            "node": "Create Recording",
             "type": "main",
             "index": 0
           }
@@ -300,7 +633,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "e3394099-b09b-486e-99b2-ff51b195e916",
-  "triggerCount": 0,
+  "versionId": "87787b11-128a-43f2-9570-bfc7aece72b7",
+  "triggerCount": 1,
   "tags": []
 }
