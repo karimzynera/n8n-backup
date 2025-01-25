@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-01-19T13:23:28.982Z",
-  "updatedAt": "2025-01-25T20:08:13.000Z",
+  "updatedAt": "2025-01-25T20:10:03.000Z",
   "id": "JQavbq9uzigZ2b3Z",
-  "name": "⚙️—Make Backup Blueprint",
+  "name": "⚙️—Make/n8n GitHub Backup",
   "active": true,
   "nodes": [
     {
@@ -130,85 +130,6 @@
       ],
       "id": "ae92fad8-ba85-4e3c-a18a-4e664c4898df",
       "name": "Format"
-    },
-    {
-      "parameters": {
-        "resource": "base",
-        "options": {
-          "permissionLevel": "={{ [\"comment\",\"create\",\"edit\"] }}"
-        }
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        20,
-        400
-      ],
-      "id": "18c2187b-2ebb-4de4-8c0e-23f074f95166",
-      "name": "Get Bases",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "f15vRM0yMsganWrF",
-          "name": "Karim's Airtable account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "base",
-        "operation": "getSchema",
-        "base": {
-          "__rl": true,
-          "value": "={{ $json.id }}",
-          "mode": "id"
-        }
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        240,
-        400
-      ],
-      "id": "26ea251e-e808-4323-833b-ecc7bddbf053",
-      "name": "Get Bases1",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "f15vRM0yMsganWrF",
-          "name": "Karim's Airtable account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "PATCH",
-        "url": "https://api.airtable.com/v0/meta/bases/appmLkopsWumFkgXM/tables/tblMaSYop5fzqigPi/fields/fldUAitpwkofC6Ilw",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "airtableTokenApi",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "description",
-              "value": "n8n is great 😉"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        440,
-        400
-      ],
-      "id": "cb187f36-fb9f-407a-899d-0ff38532e73e",
-      "name": "Update Field",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "f15vRM0yMsganWrF",
-          "name": "Karim's Airtable account"
-        }
-      }
     },
     {
       "parameters": {
@@ -1008,22 +929,6 @@
         ]
       ]
     },
-    "Get Bases": {
-      "main": [
-        [
-          {
-            "node": "Get Bases1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Bases1": {
-      "main": [
-        []
-      ]
-    },
     "Update File": {
       "main": [
         [],
@@ -1379,7 +1284,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "51ac2957-3123-422b-8d4a-ed4ddae3c7a6",
+  "versionId": "025ab26a-e9d0-42a8-806a-d72a145d2312",
   "triggerCount": 2,
   "tags": []
 }
