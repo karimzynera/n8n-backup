@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-19T13:23:28.982Z",
-  "updatedAt": "2025-01-25T20:45:23.000Z",
+  "updatedAt": "2025-01-25T20:51:25.000Z",
   "id": "JQavbq9uzigZ2b3Z",
   "name": "⚙️—Make/n8n GitHub Backup",
   "active": true,
@@ -49,10 +49,10 @@
         },
         "repository": {
           "__rl": true,
-          "value": "={{ $('Set Globals').item.json.gitHubRepoName }}",
+          "value": "={{ $('Set Globals').item.json.gitHubRepoNameMake }}",
           "mode": "name"
         },
-        "filePath": "={{ $('Set Globals').item.json.gitHubRepoPath }}{{ $('Iterator').item.json.id }}.json",
+        "filePath": "={{ $('Set Globals').item.json.gitHubRepoPathMake }}/{{ $('Iterator').item.json.id }}.json",
         "fileContent": "={{ $('Format').item.json.formattedContent }}",
         "commitMessage": "=\"{{ $('Iterator').item.json.name }}\" last edited by {{ $('Iterator').item.json.updatedByUser.name }} @ {{ $('Iterator').item.json.lastEdit }}"
       },
@@ -96,10 +96,10 @@
         },
         "repository": {
           "__rl": true,
-          "value": "={{ $('Set Globals').item.json.gitHubRepoName }}",
+          "value": "={{ $('Set Globals').item.json.gitHubRepoNameMake }}",
           "mode": "name"
         },
-        "filePath": "={{ $('Set Globals').item.json.gitHubRepoPath }}{{ $('Iterator').item.json.id }}.json",
+        "filePath": "={{ $('Set Globals').item.json.gitHubRepoPathMake }}/{{ $('Iterator').item.json.id }}.json",
         "fileContent": "={{ $('Format').item.json.formattedContent }}",
         "commitMessage": "=\"{{ $('Iterator').item.json.name }}\" last edited by {{ $('Iterator').item.json.updatedByUser.name }} @ {{ $('Iterator').item.json.lastEdit }}"
       },
@@ -140,7 +140,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        860,
+        1260,
         180
       ],
       "id": "ec9a7e0f-fc35-4f1a-9c7f-fa0a82f1ab7a",
@@ -157,17 +157,17 @@
         },
         "repository": {
           "__rl": true,
-          "value": "=n8n-backup",
+          "value": "={{ $('Set Globals').item.json.gitHubRepoNameN8n }}",
           "mode": "name"
         },
-        "filePath": "=workflows/{{ $json.workflowId }}.json",
+        "filePath": "={{ $('Set Globals').item.json.gitHubRepoPathN8n }}/{{ $json.workflowId }}.json",
         "fileContent": "={{ $json.formattedJson }}",
         "commitMessage": "=\"{{ $json.workflowName }}\" last edited @ {{ $now }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1060,
+        1460,
         180
       ],
       "id": "acf5ca3d-0cc8-4211-9c91-c4e8df2888cd",
@@ -224,7 +224,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        660,
+        1060,
         180
       ],
       "id": "889b6271-da49-485c-973a-1fd265d5f169",
@@ -280,17 +280,17 @@
         },
         "repository": {
           "__rl": true,
-          "value": "=n8n-backup",
+          "value": "={{ $('Set Globals').item.json.gitHubRepoNameN8n }}",
           "mode": "name"
         },
-        "filePath": "=workflows/{{ $json.workflowId }}.json",
+        "filePath": "={{ $('Set Globals').item.json.gitHubRepoPathN8n }}/{{ $json.workflowId }}.json",
         "fileContent": "={{ $json.formattedJson }}",
         "commitMessage": "=\"{{ $json.workflowName }}\" last edited @ {{ $now }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1300,
+        1700,
         180
       ],
       "id": "8a53e0f7-deac-4152-9168-63ac83034140",
@@ -315,14 +315,14 @@
             },
             {
               "id": "ab828544-9263-4d2e-a40a-30a3fe3efe92",
-              "name": "gitHubRepoName",
+              "name": "gitHubRepoNameMake",
               "value": "make-backup",
               "type": "string"
             },
             {
               "id": "fc12ddef-463c-4d8a-b48e-e7b99277cd2b",
-              "name": "gitHubRepoPath",
-              "value": "scenarios/",
+              "name": "gitHubRepoPathMake",
+              "value": "scenarios",
               "type": "string"
             },
             {
@@ -341,6 +341,18 @@
               "id": "2d766b8a-cbc6-4995-bfe0-d3559a27d6ab",
               "name": "makeToken",
               "value": "064e4cab-df56-4b12-ad0b-6609ff694a2e",
+              "type": "string"
+            },
+            {
+              "id": "a293fd0a-d719-4c8d-9492-056aaaf996b5",
+              "name": "gitHubRepoNameN8n",
+              "value": "n8n-backup",
+              "type": "string"
+            },
+            {
+              "id": "21cb1a74-19a8-4608-8bfc-b3e214e66029",
+              "name": "gitHubRepoPathN8n",
+              "value": "workflows",
               "type": "string"
             }
           ]
@@ -491,7 +503,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "516776ad-4af0-41ac-a953-e4db9f6fed33",
+  "versionId": "3e697a4b-2e66-4257-90fd-f27e87152ba2",
   "triggerCount": 1,
   "tags": []
 }
