@@ -1,0 +1,463 @@
+{
+  "createdAt": "2025-01-26T15:12:53.063Z",
+  "updatedAt": "2025-01-26T15:42:16.000Z",
+  "id": "wW8B0lvacH80Upbp",
+  "name": "🎨—Update Airtable Team",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "user",
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        220,
+        0
+      ],
+      "id": "a128ba4c-cc02-4bf2-ba7c-73a8edcc4968",
+      "name": "List Users",
+      "webhookId": "561dc2a7-b1bf-4580-a8d3-f7bf597d741a",
+      "credentials": {
+        "slackApi": {
+          "id": "VF1RKmzNpL69birS",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5db82972-8975-4382-a93e-75ff6bf5d84d",
+              "leftValue": "={{ $json.is_bot }}",
+              "rightValue": "false",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7a56144f-6dc8-442c-85b5-943795a46ac4",
+              "leftValue": "={{ $json.is_email_confirmed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "55429c5b-af64-4ef8-9955-66b18f3a3f72",
+      "name": "Exclude Bots"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8e7d6c17-5adb-47ec-8eb1-e8928c8e4e00",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMaSYop5fzqigPi",
+          "mode": "list",
+          "cachedResultName": "Team",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM/tblMaSYop5fzqigPi"
+        },
+        "filterByFormula": "={Email} = '{{ $json.profile.email }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "c483408d-243a-4371-8ef0-5d11e2d5bdfb",
+      "name": "Search Team",
+      "executeOnce": false,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appmLkopsWumFkgXM",
+          "mode": "list",
+          "cachedResultName": "Zynera OS",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMaSYop5fzqigPi",
+          "mode": "list",
+          "cachedResultName": "Team",
+          "cachedResultUrl": "https://airtable.com/appmLkopsWumFkgXM/tblMaSYop5fzqigPi"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "Timezone": "={{ $('Exclude Bots').item.json.tz }}",
+            "Slack ID": "={{ $('Exclude Bots').item.json.id }}",
+            "Profile Picture": "={{ [{ \"url\": $('Exclude Bots').item.json.profile.image_512}] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Todo",
+                  "value": "Todo"
+                },
+                {
+                  "name": "In progress",
+                  "value": "In progress"
+                },
+                {
+                  "name": "Done",
+                  "value": "Done"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Airtable User",
+              "displayName": "Airtable User",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Meetings",
+              "displayName": "Meetings",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Prename",
+              "displayName": "Prename",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Lastname",
+              "displayName": "Lastname",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Slack ID",
+              "displayName": "Slack ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Timezone",
+              "displayName": "Timezone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Europe/Amsterdam",
+                  "value": "Europe/Amsterdam"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Profile Picture",
+              "displayName": "Profile Picture",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Role",
+              "displayName": "Role",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Customer Success",
+                  "value": "Customer Success"
+                },
+                {
+                  "name": "Developer",
+                  "value": "Developer"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created at",
+              "displayName": "Created at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Upadted at",
+              "displayName": "Upadted at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "31d89a40-82f9-4bbe-be91-6cb79eefab7a",
+      "name": "Update Team",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "List Users": {
+      "main": [
+        [
+          {
+            "node": "Exclude Bots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exclude Bots": {
+      "main": [
+        [
+          {
+            "node": "Search Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "List Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Team": {
+      "main": [
+        [
+          {
+            "node": "Update Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Search Team": [
+      {
+        "json": {
+          "id": "rec2XPZnALaEUysnz",
+          "createdTime": "2024-07-20T12:20:03.000Z",
+          "Name": "Karim El Kassas",
+          "Prename": "Karim",
+          "Airtable User": {
+            "id": "usryWvTaoddQVF23q",
+            "email": "karim@zynera.ai",
+            "name": "Karim El Kassas"
+          },
+          "Lastname": "El Kassas",
+          "Email": "karim@zynera.ai"
+        }
+      },
+      {
+        "json": {
+          "id": "recav2a687abqtCE0",
+          "createdTime": "2024-07-20T12:20:03.000Z",
+          "Name": "Harez Tokhi",
+          "Prename": "Harez",
+          "Lastname": "Tokhi",
+          "Email": "harez@zynera.ai"
+        }
+      }
+    ]
+  },
+  "versionId": "5e61bc75-3ebe-4888-97f3-27dabc144792",
+  "triggerCount": 1,
+  "tags": []
+}
