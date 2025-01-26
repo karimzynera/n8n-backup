@@ -1,9 +1,9 @@
 {
   "createdAt": "2025-01-25T21:01:03.179Z",
-  "updatedAt": "2025-01-25T22:31:31.000Z",
+  "updatedAt": "2025-01-26T13:33:55.000Z",
   "id": "SluG44y8nHIQL79E",
   "name": "🪰—Fireflies Recording",
-  "active": false,
+  "active": true,
   "nodes": [
     {
       "parameters": {},
@@ -30,8 +30,7 @@
       ],
       "id": "6bdef46c-5018-4cbf-a946-6620ac49a7ce",
       "name": "Fireflies",
-      "webhookId": "7435376a-dae4-4588-81ee-768b06e1d7d9",
-      "disabled": true
+      "webhookId": "7435376a-dae4-4588-81ee-768b06e1d7d9"
     },
     {
       "parameters": {
@@ -633,7 +632,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "87787b11-128a-43f2-9570-bfc7aece72b7",
+  "versionId": "6eb6ba8a-6ee5-490b-bd5e-a0a7ef94820b",
   "triggerCount": 1,
   "tags": []
 }
