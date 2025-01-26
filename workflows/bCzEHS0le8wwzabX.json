@@ -1,0 +1,136 @@
+{
+  "createdAt": "2025-01-26T13:59:44.132Z",
+  "updatedAt": "2025-01-26T13:59:59.000Z",
+  "id": "bCzEHS0le8wwzabX",
+  "name": "📆—Discovery Call Booking",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "BOOKING_CREATED"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.calTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "490313ed-f197-49aa-9c3e-1815f946fa8d",
+      "name": "Cal.com Trigger",
+      "webhookId": "598eb382-1948-48ea-9986-1c78dcad07a1",
+      "credentials": {
+        "calApi": {
+          "id": "YJNwfsmIlrQyRJsA",
+          "name": "Cal account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        440,
+        0
+      ],
+      "id": "d5351b4d-1ad7-4de0-8db2-0e10788c81d6",
+      "name": "OpenAI"
+    },
+    {
+      "parameters": {
+        "amount": 14,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "d1203292-bca9-49ef-be47-f500285a1ce2",
+      "name": "Wait",
+      "webhookId": "f07befb3-9ed8-4f7c-89dd-445d828961ab"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        800,
+        0
+      ],
+      "id": "25fe2945-85fb-4ffc-a29f-72078b6e5375",
+      "name": "Gmail",
+      "webhookId": "b5c9850f-9af7-4453-be25-513d81523748",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tbU8KvIKXWPpEH4u",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cal.com Trigger": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "239e6ccd-a65c-4e79-81b8-8486a31402ba",
+  "triggerCount": 0,
+  "tags": []
+}
