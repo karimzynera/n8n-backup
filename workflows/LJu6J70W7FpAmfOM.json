@@ -1,0 +1,63 @@
+{
+  "createdAt": "2025-01-27T02:16:44.718Z",
+  "updatedAt": "2025-01-27T02:16:44.718Z",
+  "id": "LJu6J70W7FpAmfOM",
+  "name": "My workflow 2",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fcbecde6-f335-4b27-a10c-06945f5bdcc2",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "5dd9e5a9-70ef-4c06-89ea-72bcbc4d61db",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "zLgECIPvYrBikYSP",
+          "name": "Karim's Supabase account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "99df69f3-4cf0-480d-a149-8215e5298b95",
+  "triggerCount": 0,
+  "tags": []
+}
