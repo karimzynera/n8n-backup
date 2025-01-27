@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-20T19:56:25.634Z",
-  "updatedAt": "2025-01-20T20:46:33.000Z",
+  "updatedAt": "2025-01-27T10:36:38.000Z",
   "id": "h5q2kE1KOpGdGbqk",
   "name": "📎—Airtable Backup CSV",
   "active": false,
@@ -168,6 +168,165 @@
       ],
       "id": "27ae36dd-6ee8-42fd-8898-608d9bc8dd4c",
       "name": "Upload CSV"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        20,
+        -480
+      ],
+      "id": "4244dba9-269f-4544-a745-b6bea21c9112",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Backup all Bases as CSV\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 440,
+        "width": 1400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -600
+      ],
+      "id": "4bb37edf-71e4-4bb5-9e92-540327d0c4a5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "base",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        -480
+      ],
+      "id": "fbab5647-11dc-408a-aecb-613d3e11eb48",
+      "name": "Get Bases",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        460,
+        -480
+      ],
+      "id": "15075745-a0c3-40d1-8862-3d75bdb5bb28",
+      "name": "Loop Bases"
+    },
+    {
+      "parameters": {
+        "resource": "base",
+        "operation": "getSchema",
+        "base": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        740,
+        -380
+      ],
+      "id": "740ffafb-be9c-444b-a3d4-a1bfd46e49ff",
+      "name": "Get Tables",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        980,
+        -580
+      ],
+      "id": "662332d5-7d60-4501-ad6d-ea4f98d684be",
+      "name": "Loop Tables"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "={{ $json.bid }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $json.tid }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1240,
+        -580
+      ],
+      "id": "5caca369-4a5c-411c-9f62-f3fefe29f562",
+      "name": "Get Records",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "07cec8d7-30db-4299-80ab-7027cfacb0bf",
+              "name": "bid",
+              "value": "={{ $('Loop Bases').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "97ab08c9-399b-4d89-add4-5c05de7bbb5c",
+              "name": "tid",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        980,
+        -380
+      ],
+      "id": "3b42181d-d09f-4928-9765-1866faee1e63",
+      "name": "Set IDs"
     }
   ],
   "connections": {
@@ -247,6 +406,91 @@
       "main": [
         []
       ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get Bases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Bases": {
+      "main": [
+        [
+          {
+            "node": "Loop Bases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Bases": {
+      "main": [
+        [
+          {
+            "node": "Loop Tables",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Tables": {
+      "main": [
+        [
+          {
+            "node": "Set IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Tables": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Records": {
+      "main": [
+        [
+          {
+            "node": "Loop Tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set IDs": {
+      "main": [
+        [
+          {
+            "node": "Loop Bases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -257,7 +501,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "cc329ce9-3a2b-4799-931d-71331563be1a",
+  "versionId": "9160b058-8bb4-4fe9-8501-dc133c9d3f84",
   "triggerCount": 0,
   "tags": []
 }
