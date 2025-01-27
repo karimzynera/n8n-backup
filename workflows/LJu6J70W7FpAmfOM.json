@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-01-27T02:16:44.718Z",
-  "updatedAt": "2025-01-27T07:46:59.000Z",
+  "updatedAt": "2025-01-27T09:51:29.000Z",
   "id": "LJu6J70W7FpAmfOM",
-  "name": "Supabase",
+  "name": "⚡—Supabase",
   "active": false,
   "nodes": [
     {
@@ -58,7 +58,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "8872d5b4-85cc-4e78-891e-7067526c7b02",
+  "versionId": "4a6e44a7-e592-49bb-9827-ba1fc8a17743",
   "triggerCount": 0,
   "tags": []
 }
