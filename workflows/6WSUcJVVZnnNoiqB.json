@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-28T15:30:39.270Z",
-  "updatedAt": "2025-01-28T15:55:28.000Z",
+  "updatedAt": "2025-01-28T16:03:46.000Z",
   "id": "6WSUcJVVZnnNoiqB",
   "name": "🕋—Al Adhan Trigger",
   "active": false,
@@ -95,7 +95,12 @@
         "bodyParameters": {
           "parameters": [
             {
-              "name": "key"
+              "name": "key",
+              "value": "={{ $json.key }}"
+            },
+            {
+              "name": "value",
+              "value": "={{ $today.format('dd-MM-yyyy') }} {{ $json.value }}"
             }
           ]
         },
@@ -190,7 +195,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "81e177fa-78b4-4890-b923-8eadbff59bd4",
+  "versionId": "921fd784-b9af-4487-8fbf-1a3bc63d4687",
   "triggerCount": 0,
   "tags": []
 }
