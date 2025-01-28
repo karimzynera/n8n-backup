@@ -1,9 +1,9 @@
 {
   "createdAt": "2025-01-26T13:59:44.132Z",
-  "updatedAt": "2025-01-28T14:40:31.000Z",
+  "updatedAt": "2025-01-28T15:10:42.000Z",
   "id": "bCzEHS0le8wwzabX",
   "name": "📆—Discovery Call Booking",
-  "active": false,
+  "active": true,
   "nodes": [
     {
       "parameters": {
@@ -97,7 +97,7 @@
           "mode": "list",
           "cachedResultName": "meetings"
         },
-        "text": "=:tada: *_New Discovery Call Booked!_*\n\n>*Meeting Details*\n• *Date & Time:* <!date^{{new Date($json.startTime).getTime() / 1000}}^{date_long} at {time}|{{$json.startTime}}> (_Your Local Time_)\n• *Duration:* {{$json.length}} minutes\n• *Location:* {{$json.attendees.first().timeZone}} \n\n>*Customer Information*\n• *Name:* {{$json.responses.name.value.firstName}} {{$json.responses.name.value.lastName}}\n• *Email:* {{$json.responses.email.value}}\n• *Role:* {{$json.responses.companyRole.value}}\n\n>*Company Details*\n• *Company:* {{$json.responses.companyName.value}}\n• *Website:* {{$json.responses.companyWebsite.value}}\n• *Industry:* {{$json.responses.companyIndustry.value}}\n• *Size:* {{$json.responses.companySize.value}} employees\n\n>*Project Information*\n• *Budget:* {{$json.responses.projectBudget.value}}\n• *Requirements:* {{$json.responses.projectRequirements.value}}\n• *Source:* {{$json.responses.source.value}}\n• *Notes:* {{$ifEmpty($json.responses.notes.value,\"-\")}}",
+        "text": "=:tada: *_New Discovery Call Booked!_*\n\n>*Meeting Details*\n• *Date & Time:* <!date^{{new Date($json.startTime).getTime() / 1000}}^{date_long} at {time}|{{$json.startTime}}> (_Your Local Time_)\n• *Duration:* {{$json.length}} minutes\n• *Location:* {{$json.attendees.first().timeZone}} \n\n>*Lead Information*\n• *Name:* {{$json.responses.name.value.firstName}} {{$json.responses.name.value.lastName}}\n• *Email:* {{$json.responses.email.value}}\n• *Role:* {{$json.responses.role.value}}\n\n>*Company Details*\n• *Company:* {{$json.responses.companyName.value}}\n• *Website:* {{$json.responses.companyWebsite.value}}\n• *Industry:* {{$json.responses.companyIndustry.value}}\n• *Size:* {{$json.responses.companySize.value}} employees\n\n>*Project Information*\n• *Budget:* {{$json.responses.projectBudget.value}}\n• *Requirements:* {{$json.responses.projectRequirements.value}}\n• *Source:* {{$json.responses.source.value}}\n• *Notes:* {{$ifEmpty($json.responses.notes.value,\"-\")}}",
         "otherOptions": {
           "includeLinkToWorkflow": false
         }
@@ -109,7 +109,7 @@
         0
       ],
       "id": "e54f0a03-7089-4901-9d1b-f7e7b49ce0ec",
-      "name": "Slack",
+      "name": "Ping Meetings",
       "webhookId": "a1688a09-cfe5-47fa-95a7-f6354551c3a2",
       "credentials": {
         "slackApi": {
@@ -124,7 +124,7 @@
       "main": [
         [
           {
-            "node": "Slack",
+            "node": "Ping Meetings",
             "type": "main",
             "index": 0
           }
@@ -153,7 +153,7 @@
         ]
       ]
     },
-    "Slack": {
+    "Ping Meetings": {
       "main": [
         []
       ]
@@ -162,12 +162,16 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Cal.com Trigger": {
+      "webhookId": "70fcd420-4319-43e9-974c-9abf43f6a4bf"
+    }
+  },
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "511a16ad-bdf3-4763-9d0e-32098d597f0b",
-  "triggerCount": 0,
+  "versionId": "0959ad20-04ee-4f9b-94ea-91b2c13957ba",
+  "triggerCount": 1,
   "tags": []
 }
