@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-26T13:59:44.132Z",
-  "updatedAt": "2025-01-28T13:45:15.000Z",
+  "updatedAt": "2025-01-28T14:40:31.000Z",
   "id": "bCzEHS0le8wwzabX",
   "name": "📆—Discovery Call Booking",
   "active": false,
@@ -15,7 +15,7 @@
       "type": "n8n-nodes-base.calTrigger",
       "typeVersion": 2,
       "position": [
-        0,
+        240,
         0
       ],
       "id": "490313ed-f197-49aa-9c3e-1815f946fa8d",
@@ -97,7 +97,7 @@
           "mode": "list",
           "cachedResultName": "meetings"
         },
-        "text": "=🎉 New Discovery Call Booked: _{{ $json.vasd }}_ (<|>)",
+        "text": "=:tada: *_New Discovery Call Booked!_*\n\n>*Meeting Details*\n• *Date & Time:* <!date^{{new Date($json.startTime).getTime() / 1000}}^{date_long} at {time}|{{$json.startTime}}> (_Your Local Time_)\n• *Duration:* {{$json.length}} minutes\n• *Location:* {{$json.attendees.first().timeZone}} \n\n>*Customer Information*\n• *Name:* {{$json.responses.name.value.firstName}} {{$json.responses.name.value.lastName}}\n• *Email:* {{$json.responses.email.value}}\n• *Role:* {{$json.responses.companyRole.value}}\n\n>*Company Details*\n• *Company:* {{$json.responses.companyName.value}}\n• *Website:* {{$json.responses.companyWebsite.value}}\n• *Industry:* {{$json.responses.companyIndustry.value}}\n• *Size:* {{$json.responses.companySize.value}} employees\n\n>*Project Information*\n• *Budget:* {{$json.responses.projectBudget.value}}\n• *Requirements:* {{$json.responses.projectRequirements.value}}\n• *Source:* {{$json.responses.source.value}}\n• *Notes:* {{$ifEmpty($json.responses.notes.value,\"-\")}}",
         "otherOptions": {
           "includeLinkToWorkflow": false
         }
@@ -133,23 +133,29 @@
     },
     "Wait": {
       "main": [
-        []
-      ]
-    },
-    "OpenAI": {
-      "main": [
-        []
-      ]
-    },
-    "Slack": {
-      "main": [
         [
           {
-            "node": "Wait",
+            "node": "OpenAI",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack": {
+      "main": [
+        []
       ]
     }
   },
@@ -160,230 +166,8 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "pinData": {
-    "Cal.com Trigger": [
-      {
-        "json": {
-          "triggerEvent": "BOOKING_CREATED",
-          "createdAt": "2025-01-28T13:43:43.062Z",
-          "bookerUrl": "https://cal.com",
-          "type": "discovery",
-          "title": "Karim El Kassas <> Zynera - Discovery Call",
-          "description": "Short coffee chat on Google Meet to get to know each other, learn more about the project, & discuss some potential solutions.",
-          "additionalNotes": "",
-          "customInputs": {},
-          "startTime": "2025-01-29T16:00:00Z",
-          "endTime": "2025-01-29T16:25:00Z",
-          "organizer": {
-            "id": 892006,
-            "name": "Karim El Kassas",
-            "email": "karim@zynera.ai",
-            "username": "zynera",
-            "timeZone": "Europe/Berlin",
-            "language": {
-              "locale": "en"
-            },
-            "timeFormat": "HH:mm",
-            "utcOffset": 60
-          },
-          "responses": {
-            "name": {
-              "label": "your_name",
-              "value": {
-                "firstName": "Karim",
-                "lastName": "El Kassas"
-              },
-              "isHidden": false
-            },
-            "email": {
-              "label": "email_address",
-              "value": "karim@zynera.ai",
-              "isHidden": false
-            },
-            "location": {
-              "label": "location",
-              "value": {
-                "value": "integrations:google:meet",
-                "optionValue": ""
-              },
-              "isHidden": false
-            },
-            "title": {
-              "label": "what_is_this_meeting_about",
-              "isHidden": true
-            },
-            "guests": {
-              "label": "additional_guests",
-              "value": [],
-              "isHidden": false
-            },
-            "rescheduleReason": {
-              "label": "reason_for_reschedule",
-              "isHidden": true
-            },
-            "companyName": {
-              "label": "Company Name",
-              "value": "Zynera",
-              "isHidden": false
-            },
-            "companySize": {
-              "label": "Company Size",
-              "value": "1 - 10",
-              "isHidden": false
-            },
-            "companyWebsite": {
-              "label": "Company Website",
-              "value": "zynera.ai",
-              "isHidden": false
-            },
-            "companyRole": {
-              "label": "Your Role",
-              "value": "CEO",
-              "isHidden": false
-            },
-            "companyIndustry": {
-              "label": "Industry",
-              "value": "B2B SaaS",
-              "isHidden": false
-            },
-            "projectRequirements": {
-              "label": "Project Requirements",
-              "value": "Improve Operations",
-              "isHidden": false
-            },
-            "projectBudget": {
-              "label": "Budget",
-              "value": "$2.501 - $6.000",
-              "isHidden": false
-            },
-            "source": {
-              "label": "How Did You Hear About Us",
-              "value": "Linkedin",
-              "isHidden": false
-            },
-            "notes": {
-              "label": "additional_notes",
-              "isHidden": false
-            }
-          },
-          "userFieldsResponses": {
-            "companyName": {
-              "label": "Company Name",
-              "value": "Zynera",
-              "isHidden": false
-            },
-            "companySize": {
-              "label": "Company Size",
-              "value": "1 - 10",
-              "isHidden": false
-            },
-            "companyWebsite": {
-              "label": "Company Website",
-              "value": "zynera.ai",
-              "isHidden": false
-            },
-            "companyRole": {
-              "label": "Your Role",
-              "value": "CEO",
-              "isHidden": false
-            },
-            "companyIndustry": {
-              "label": "Industry",
-              "value": "B2B SaaS",
-              "isHidden": false
-            },
-            "projectRequirements": {
-              "label": "Project Requirements",
-              "value": "Improve Operations",
-              "isHidden": false
-            },
-            "projectBudget": {
-              "label": "Budget",
-              "value": "$2.501 - $6.000",
-              "isHidden": false
-            },
-            "source": {
-              "label": "How Did You Hear About Us",
-              "value": "Linkedin",
-              "isHidden": false
-            }
-          },
-          "attendees": [
-            {
-              "email": "karim@zynera.ai",
-              "name": "Karim El Kassas",
-              "firstName": "Karim",
-              "lastName": "El Kassas",
-              "timeZone": "Europe/Berlin",
-              "language": {
-                "locale": "en"
-              },
-              "utcOffset": 60
-            }
-          ],
-          "location": "integrations:google:meet",
-          "conferenceCredentialId": 595795,
-          "destinationCalendar": [
-            {
-              "id": 299876,
-              "integration": "google_calendar",
-              "externalId": "karim@zynera.ai",
-              "primaryEmail": "karim@zynera.ai",
-              "userId": 892006,
-              "eventTypeId": null,
-              "credentialId": 595774,
-              "domainWideDelegationCredentialId": null
-            }
-          ],
-          "hideCalendarNotes": false,
-          "hideCalendarEventDetails": false,
-          "requiresConfirmation": false,
-          "eventTypeId": 831562,
-          "seatsShowAttendees": true,
-          "seatsPerTimeSlot": null,
-          "seatsShowAvailabilityCount": true,
-          "schedulingType": null,
-          "iCalUID": "g5S8AStm1cQRwbvRg5QTfG@Cal.com",
-          "iCalSequence": 0,
-          "oneTimePassword": null,
-          "uid": "g5S8AStm1cQRwbvRg5QTfG",
-          "conferenceData": {
-            "createRequest": {
-              "requestId": "8a0ce172-f69a-51b5-8481-93feb73d58e2"
-            }
-          },
-          "appsStatus": [
-            {
-              "appName": "google-calendar",
-              "type": "google_calendar",
-              "success": 1,
-              "failures": 0,
-              "errors": [],
-              "warnings": []
-            },
-            {
-              "appName": "Google Meet",
-              "type": "conferencing",
-              "success": 1,
-              "failures": 0,
-              "errors": []
-            }
-          ],
-          "eventTitle": "Discovery Call",
-          "eventDescription": "Short coffee chat on Google Meet to get to know each other, learn more about the project, & discuss some potential solutions.",
-          "price": 0,
-          "currency": "usd",
-          "length": 25,
-          "bookingId": 5545854,
-          "metadata": {
-            "videoCallUrl": "https://meet.google.com/scc-exjx-zrn"
-          },
-          "status": "ACCEPTED"
-        }
-      }
-    ]
-  },
-  "versionId": "202bb1ce-d9c2-415e-a0cf-f2ce45abfc24",
+  "pinData": {},
+  "versionId": "511a16ad-bdf3-4763-9d0e-32098d597f0b",
   "triggerCount": 0,
   "tags": []
 }
