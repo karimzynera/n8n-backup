@@ -1,0 +1,196 @@
+{
+  "createdAt": "2025-01-28T15:30:39.270Z",
+  "updatedAt": "2025-01-28T15:55:28.000Z",
+  "id": "6WSUcJVVZnnNoiqB",
+  "name": "🕋—Al Adhan Trigger",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n    \"timings\": [\n        { \"key\": \"Fajr\", \"value\": \"{{$json.data.timings.Fajr}}\" },\n        { \"key\": \"Dhuhr\", \"value\": \"{{$json.data.timings.Dhuhr}}\" },\n        { \"key\": \"Asr\", \"value\": \"{{$json.data.timings.Asr}}\" },\n        { \"key\": \"Maghrib\", \"value\": \"{{$json.data.timings.Maghrib}}\" },\n        { \"key\": \"Isha\", \"value\": \"{{$json.data.timings.Isha}}\" }\n    ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1160,
+        320
+      ],
+      "id": "52b83bb8-34d8-424f-ba07-df087902294d",
+      "name": "Set Timings"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        500,
+        320
+      ],
+      "id": "95c451f0-e816-4bde-8651-c42286fc2cb9",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.aladhan.com/v1/timingsByCity/{{ $now.format('dd-MM-yyyy') }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "city",
+              "value": "Frankfurt"
+            },
+            {
+              "name": "country",
+              "value": "DE"
+            },
+            {
+              "name": "method",
+              "value": "4"
+            },
+            {
+              "name": "tune",
+              "value": "={{ $json.tune.map(item => item.value).join() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        940,
+        320
+      ],
+      "id": "603b1d92-9883-4019-b7a6-f120d59467e5",
+      "name": "Get Times"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"tune\": [\n    {\"key\": \"Imsak\", \"value\": 0},\n    {\"key\": \"Fajr\", \"value\": 3},\n    {\"key\": \"Sunrise\", \"value\": 0},\n    {\"key\": \"Dhuhr\", \"value\": 0},\n    {\"key\": \"Asr\", \"value\": 1},\n    {\"key\": \"Maghrib\", \"value\": 2},\n    {\"key\": \"Sunset\", \"value\": 0},\n    {\"key\": \"Isha\", \"value\": 19},\n    {\"key\": \"Midnight\", \"value\": 0}\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        720,
+        320
+      ],
+      "id": "1da5d282-e11a-4024-ac0b-9b8ccd59837f",
+      "name": "Set Tunes"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hkdk.events/ko74lnk4q2trp6",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1600,
+        320
+      ],
+      "id": "97303c87-8e15-432a-a73c-dfac843c8e26",
+      "name": "Store Timings"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "timings",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        320
+      ],
+      "id": "5ead928f-bb5e-478e-8f07-ed3935763b34",
+      "name": "Split Timings"
+    }
+  ],
+  "connections": {
+    "Set Timings": {
+      "main": [
+        [
+          {
+            "node": "Split Timings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Set Tunes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Times": {
+      "main": [
+        [
+          {
+            "node": "Set Timings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Tunes": {
+      "main": [
+        [
+          {
+            "node": "Get Times",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Timings": {
+      "main": [
+        [
+          {
+            "node": "Store Timings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "81e177fa-78b4-4890-b923-8eadbff59bd4",
+  "triggerCount": 0,
+  "tags": []
+}
