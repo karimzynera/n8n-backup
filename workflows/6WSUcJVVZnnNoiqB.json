@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-28T15:30:39.270Z",
-  "updatedAt": "2025-01-28T16:03:46.000Z",
+  "updatedAt": "2025-01-30T20:29:54.000Z",
   "id": "6WSUcJVVZnnNoiqB",
   "name": "🕋—Al Adhan Trigger",
   "active": false,
@@ -8,14 +8,14 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "={\n    \"timings\": [\n        { \"key\": \"Fajr\", \"value\": \"{{$json.data.timings.Fajr}}\" },\n        { \"key\": \"Dhuhr\", \"value\": \"{{$json.data.timings.Dhuhr}}\" },\n        { \"key\": \"Asr\", \"value\": \"{{$json.data.timings.Asr}}\" },\n        { \"key\": \"Maghrib\", \"value\": \"{{$json.data.timings.Maghrib}}\" },\n        { \"key\": \"Isha\", \"value\": \"{{$json.data.timings.Isha}}\" }\n    ]\n}",
+        "jsonOutput": "=[\n  { \"json\": { \"key\": \"Fajr\", \"value\": \"06:10\" } },\n  { \"json\": { \"key\": \"Dhuhr\", \"value\": \"12:39\" } },\n  { \"json\": { \"key\": \"Asr\", \"value\": \"14:52\" } },\n  { \"json\": { \"key\": \"Maghrib\", \"value\": \"17:19\" } },\n  { \"json\": { \"key\": \"Isha\", \"value\": \"19:06\" } }\n]",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1160,
-        320
+        1380,
+        140
       ],
       "id": "52b83bb8-34d8-424f-ba07-df087902294d",
       "name": "Set Timings"
@@ -109,7 +109,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1600,
+        1380,
         320
       ],
       "id": "97303c87-8e15-432a-a73c-dfac843c8e26",
@@ -123,11 +123,24 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1380,
-        320
+        1600,
+        140
       ],
       "id": "5ead928f-bb5e-478e-8f07-ed3935763b34",
       "name": "Split Timings"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the input data\nconst inputData = items[0].json.data.timings;\n\n// Define the prayer names to keep\nconst requiredPrayers = [\"Fajr\", \"Dhuhr\", \"Asr\", \"Maghrib\", \"Isha\"];\n\n// Filter only the required prayer times\nconst outputData = Object.entries(inputData)\n  .filter(([name]) => requiredPrayers.includes(name))\n  .map(([name, time]) => ({ name, time }));\n\n// Return the transformed data\nreturn outputData.map(item => ({ json: item }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        320
+      ],
+      "id": "2b978844-37bf-4e74-9f5e-489e788a2047",
+      "name": "Split Timings1"
     }
   ],
   "connections": {
@@ -157,7 +170,7 @@
       "main": [
         [
           {
-            "node": "Set Timings",
+            "node": "Split Timings1",
             "type": "main",
             "index": 0
           }
@@ -177,6 +190,11 @@
     },
     "Split Timings": {
       "main": [
+        []
+      ]
+    },
+    "Split Timings1": {
+      "main": [
         [
           {
             "node": "Store Timings",
@@ -194,8 +212,108 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "pinData": {},
-  "versionId": "921fd784-b9af-4487-8fbf-1a3bc63d4687",
+  "pinData": {
+    "Get Times": [
+      {
+        "json": {
+          "code": 200,
+          "status": "OK",
+          "data": {
+            "timings": {
+              "Fajr": "06:10",
+              "Sunrise": "08:02",
+              "Dhuhr": "12:39",
+              "Asr": "14:52",
+              "Sunset": "17:17",
+              "Maghrib": "17:19",
+              "Isha": "19:06",
+              "Imsak": "05:57",
+              "Midnight": "00:39",
+              "Firstthird": "22:12",
+              "Lastthird": "03:07"
+            },
+            "date": {
+              "readable": "30 Jan 2025",
+              "timestamp": "1738216800",
+              "hijri": {
+                "date": "30-07-1446",
+                "format": "DD-MM-YYYY",
+                "day": "30",
+                "weekday": {
+                  "en": "Al Khamees",
+                  "ar": "الخميس"
+                },
+                "month": {
+                  "number": 7,
+                  "en": "Rajab",
+                  "ar": "رَجَب",
+                  "days": 30
+                },
+                "year": "1446",
+                "designation": {
+                  "abbreviated": "AH",
+                  "expanded": "Anno Hegirae"
+                },
+                "holidays": [],
+                "adjustedHolidays": [],
+                "method": "HJCoSA"
+              },
+              "gregorian": {
+                "date": "30-01-2025",
+                "format": "DD-MM-YYYY",
+                "day": "30",
+                "weekday": {
+                  "en": "Thursday"
+                },
+                "month": {
+                  "number": 1,
+                  "en": "January"
+                },
+                "year": "2025",
+                "designation": {
+                  "abbreviated": "AD",
+                  "expanded": "Anno Domini"
+                },
+                "lunarSighting": false
+              }
+            },
+            "meta": {
+              "latitude": 1.234567,
+              "longitude": 2.34567,
+              "timezone": "Europe/Berlin",
+              "method": {
+                "id": 4,
+                "name": "Umm Al-Qura University, Makkah",
+                "params": {
+                  "Fajr": 18.5,
+                  "Isha": "90 min"
+                },
+                "location": {
+                  "latitude": 21.3890824,
+                  "longitude": 39.8579118
+                }
+              },
+              "latitudeAdjustmentMethod": "ANGLE_BASED",
+              "midnightMode": "STANDARD",
+              "school": "STANDARD",
+              "offset": {
+                "Imsak": 0,
+                "Fajr": "3",
+                "Sunrise": 0,
+                "Dhuhr": 0,
+                "Asr": "1",
+                "Maghrib": "2",
+                "Sunset": 0,
+                "Isha": "19",
+                "Midnight": 0
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "versionId": "ee4f608e-506f-4e60-b8fb-6da5c35036a5",
   "triggerCount": 0,
   "tags": []
 }
