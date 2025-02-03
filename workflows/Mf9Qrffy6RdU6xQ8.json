@@ -1,18 +1,175 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-03T08:22:15.893Z",
+  "updatedAt": "2025-02-03T10:25:44.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
-  "nodes": [],
-  "connections": {},
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements",
+        "options": {
+          "ignoreSSL": false
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        180
+      ],
+      "id": "7267b61d-f3f6-4864-9011-6484d0dcfd7c",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        80
+      ],
+      "id": "28df0a86-9d05-4ef7-83e7-8b3015e772ca",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C07VAUAGKUG",
+          "mode": "list",
+          "cachedResultName": "alerts"
+        },
+        "text": "💰 New Job LIsting in the Aitrable Forum",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        280,
+        -120
+      ],
+      "id": "39aaa52f-75e7-4321-8ea0-cf04b315ba67",
+      "name": "Slack",
+      "webhookId": "7572c0fa-aa07-42fa-ae9d-6fbaceeb3ad4",
+      "credentials": {
+        "slackApi": {
+          "id": "VF1RKmzNpL69birS",
+          "name": "Zynera's Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "feedUrl": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        140,
+        300
+      ],
+      "id": "ed308e67-1303-49ab-9776-de663598e63c",
+      "name": "RSS Feed Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "d8c894cf-39fa-462a-924f-e40f01fbffe9",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "386b40dd-268c-4758-be92-e46d60d39207",
+      "name": "XML"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        []
+      ]
+    },
+    "Slack": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "XML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Feed Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "settings": {
     "executionOrder": "v1"
   },
   "staticData": null,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "b6a477b0-0e06-457e-a3ac-5a85d74bb3db",
+  "versionId": "4c7d4b82-b462-4f99-853b-01c8d4c0a72a",
   "triggerCount": 0,
   "tags": []
 }
