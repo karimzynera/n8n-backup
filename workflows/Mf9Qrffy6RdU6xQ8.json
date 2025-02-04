@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-03T10:25:44.000Z",
+  "updatedAt": "2025-02-04T20:45:42.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -169,7 +169,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "4c7d4b82-b462-4f99-853b-01c8d4c0a72a",
+  "versionId": "29ccf80c-6705-40fa-8b45-d0ea7957e46a",
   "triggerCount": 0,
   "tags": []
 }
