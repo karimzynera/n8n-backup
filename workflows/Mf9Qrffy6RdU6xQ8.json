@@ -1,45 +1,10 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-04T20:45:42.000Z",
+  "updatedAt": "2025-02-13T18:52:27.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
   "nodes": [
-    {
-      "parameters": {
-        "url": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements",
-        "options": {
-          "ignoreSSL": false
-        }
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.1,
-      "position": [
-        340,
-        180
-      ],
-      "id": "7267b61d-f3f6-4864-9011-6484d0dcfd7c",
-      "name": "RSS Read"
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        140,
-        80
-      ],
-      "id": "28df0a86-9d05-4ef7-83e7-8b3015e772ca",
-      "name": "Schedule Trigger"
-    },
     {
       "parameters": {
         "select": "channel",
@@ -70,26 +35,6 @@
     },
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {
-              "mode": "everyMinute"
-            }
-          ]
-        },
-        "feedUrl": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements"
-      },
-      "type": "n8n-nodes-base.rssFeedReadTrigger",
-      "typeVersion": 1,
-      "position": [
-        140,
-        300
-      ],
-      "id": "ed308e67-1303-49ab-9776-de663598e63c",
-      "name": "RSS Feed Trigger"
-    },
-    {
-      "parameters": {
         "url": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements",
         "options": {}
       },
@@ -114,25 +59,27 @@
       ],
       "id": "386b40dd-268c-4758-be92-e46d60d39207",
       "name": "XML"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {}
+          ]
+        },
+        "feedUrl": "https://community.airtable.com/idgpi83864/rss/board?board.id=jobs"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f525ede7-675a-4613-82c1-6b56aefa7931",
+      "name": "RSS Feed Trigger"
     }
   ],
   "connections": {
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "RSS Read",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "RSS Read": {
-      "main": [
-        []
-      ]
-    },
     "Slack": {
       "main": [
         []
@@ -153,7 +100,7 @@
       "main": [
         [
           {
-            "node": "RSS Read",
+            "node": "Slack",
             "type": "main",
             "index": 0
           }
@@ -169,7 +116,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "29ccf80c-6705-40fa-8b45-d0ea7957e46a",
+  "versionId": "bde6de9b-dc9e-4428-b453-e5924e1eba74",
   "triggerCount": 0,
   "tags": []
 }
