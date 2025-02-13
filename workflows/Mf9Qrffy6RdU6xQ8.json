@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-13T19:32:27.000Z",
+  "updatedAt": "2025-02-13T20:18:55.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -20,8 +20,8 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.3,
       "position": [
-        280,
-        -120
+        200,
+        0
       ],
       "id": "39aaa52f-75e7-4321-8ea0-cf04b315ba67",
       "name": "Slack",
@@ -45,11 +45,67 @@
       "type": "n8n-nodes-base.rssFeedReadTrigger",
       "typeVersion": 1,
       "position": [
-        0,
+        20,
         0
       ],
       "id": "f525ede7-675a-4613-82c1-6b56aefa7931",
       "name": "RSS Feed Trigger"
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "=appmLkopsWumFkgXM",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "=tblMaSYop5fzqigPi",
+          "mode": "id"
+        },
+        "id": "rec2XPZnALaEUysnz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        20,
+        -220
+      ],
+      "id": "cc1f380b-42be-4eb6-9702-0376a5b36fe9",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "f15vRM0yMsganWrF",
+          "name": "Karim's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This should be placed in a Function node between your GET and CREATE operations\nfunction prepareRecordForCreation(items) {\n  // Get the first item (the retrieved record)\n  if (!Array.isArray(items) || items.length === 0 || !items[0].json) {\n    return [{ json: { fields: {} } }];\n  }\n  \n  const record = items[0].json;\n  \n  // System fields that should be filtered out\n  const systemFields = [\n    'Record ID',\n    'Created at',\n    'Last modified at',\n    'Created time',\n    'Last modified time',\n    'Created By',\n    'Last Modified By'\n  ];\n  \n  // Create a new fields object without system fields\n  const fieldsToCreate = {};\n  \n  if (record.fields) {\n    Object.entries(record.fields).forEach(([key, value]) => {\n      if (!systemFields.includes(key)) {\n        fieldsToCreate[key] = value;\n      }\n    });\n  }\n  \n  // Return the properly formatted object for create operation\n  return [{\n    json: {\n      fields: fieldsToCreate\n    }\n  }];\n}\n\n// Process the input items\nreturn prepareRecordForCreation($input.all());"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -220
+      ],
+      "id": "d5b18adf-be7d-4d60-baf7-e6d7f248d6d1",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        -220
+      ],
+      "id": "8272667b-bc68-447a-93c2-a5cf1322d864",
+      "name": "HTTP Request"
     }
   ],
   "connections": {
@@ -68,6 +124,28 @@
           }
         ]
       ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -78,7 +156,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "bc21a737-e2f4-4745-a3c4-553a51f64397",
+  "versionId": "d7978634-1fe3-4232-ba3b-f0851b473c64",
   "triggerCount": 0,
   "tags": []
 }
