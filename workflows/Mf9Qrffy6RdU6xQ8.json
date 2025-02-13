@@ -1,9 +1,9 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-11T07:00:59.000Z",
+  "updatedAt": "2025-02-04T20:45:42.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
-  "active": true,
+  "active": false,
   "nodes": [
     {
       "parameters": {
@@ -38,8 +38,7 @@
         80
       ],
       "id": "28df0a86-9d05-4ef7-83e7-8b3015e772ca",
-      "name": "Schedule Trigger",
-      "disabled": true
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
@@ -87,8 +86,7 @@
         300
       ],
       "id": "ed308e67-1303-49ab-9776-de663598e63c",
-      "name": "RSS Feed Trigger",
-      "disabled": true
+      "name": "RSS Feed Trigger"
     },
     {
       "parameters": {
@@ -116,51 +114,6 @@
       ],
       "id": "386b40dd-268c-4758-be92-e46d60d39207",
       "name": "XML"
-    },
-    {
-      "parameters": {
-        "path": "1e04d986-b39e-4cbf-8069-fbbc62b10532",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        780,
-        340
-      ],
-      "id": "c3aced46-b274-4f7d-8f3d-9d1843f13cf6",
-      "name": "Webhook",
-      "webhookId": "1e04d986-b39e-4cbf-8069-fbbc62b10532"
-    },
-    {
-      "parameters": {
-        "jsCode": "return [{\n  json: {\n    Prospects: $input.all().flatMap(item => \n      item.json.body.map(person => ({\n        id: person.id,\n        name: person.name,\n        firstName: person.firstName,\n        lastName: person.lastName,\n        source: person.source,\n        email: person.emails.length > 0 ? person.emails[0].email : ''\n      }))\n    )\n  }\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1020,
-        320
-      ],
-      "id": "79a22bdb-ad3f-421f-89d5-3e83bee92a24",
-      "name": "Code"
-    },
-    {
-      "parameters": {
-        "options": {
-          "responseCode": 200,
-          "responseKey": "={{ $json.data }}"
-        }
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        1240,
-        320
-      ],
-      "id": "80a6bfd6-753c-4e65-ade9-9014f473e968",
-      "name": "Respond to Webhook"
     }
   ],
   "connections": {
@@ -206,28 +159,6 @@
           }
         ]
       ]
-    },
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
@@ -238,7 +169,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "fc6f6881-7e21-4c0f-907a-99449cfcef43",
-  "triggerCount": 1,
+  "versionId": "29ccf80c-6705-40fa-8b45-d0ea7957e46a",
+  "triggerCount": 0,
   "tags": []
 }
