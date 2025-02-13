@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-13T18:52:27.000Z",
+  "updatedAt": "2025-02-13T19:32:27.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -35,33 +35,6 @@
     },
     {
       "parameters": {
-        "url": "https://community.airtable.com/idgpi83864/rss/board?board.id=announcements",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        660,
-        0
-      ],
-      "id": "d8c894cf-39fa-462a-924f-e40f01fbffe9",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.xml",
-      "typeVersion": 1,
-      "position": [
-        880,
-        0
-      ],
-      "id": "386b40dd-268c-4758-be92-e46d60d39207",
-      "name": "XML"
-    },
-    {
-      "parameters": {
         "pollTimes": {
           "item": [
             {}
@@ -85,17 +58,6 @@
         []
       ]
     },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "XML",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "RSS Feed Trigger": {
       "main": [
         [
@@ -116,7 +78,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "bde6de9b-dc9e-4428-b453-e5924e1eba74",
+  "versionId": "bc21a737-e2f4-4745-a3c4-553a51f64397",
   "triggerCount": 0,
   "tags": []
 }
