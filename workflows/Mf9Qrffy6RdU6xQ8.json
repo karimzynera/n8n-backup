@@ -1,10 +1,50 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-13T20:18:55.000Z",
+  "updatedAt": "2025-02-13T23:01:22.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
   "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {}
+          ]
+        },
+        "feedUrl": "https://community.airtable.com/idgpi83864/rss/board?board.id=jobs"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        -160
+      ],
+      "id": "f525ede7-675a-4613-82c1-6b56aefa7931",
+      "name": "RSS Feed Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "customAuth",
+        "endpoint": "https://valued-de.myshopify.com/admin/api/2024-10/graphql.json",
+        "query": "=query {\n  cashTrackingSessions(first: 250, after: {{ $if($json.endCursor, `\"${$json.endCursor}\"`, \"null\") }}\n) {\n    edges {\n      node {\n        id\n        location { name }\n        closingBalance { amount }\n        closingNote\n        closingTime\n        openingBalance { amount }\n        openingNote\n        openingTime\n        adjustments(first: 100, after: null) {\n          edges {\n            node {\n              cash {\n                amount\n              }\n              note\n              time\n            }\n          }\n          pageInfo {\n            hasNextPage\n            endCursor\n          }\n        }\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}"
+      },
+      "type": "n8n-nodes-base.graphql",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        40
+      ],
+      "id": "6b8bae05-81aa-4f7c-890c-6ef7308181d6",
+      "name": "GraphQL",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "4KGNQAAXJz6l8xcO",
+          "name": "Shopify"
+        }
+      }
+    },
     {
       "parameters": {
         "select": "channel",
@@ -20,8 +60,8 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.3,
       "position": [
-        200,
-        0
+        380,
+        -160
       ],
       "id": "39aaa52f-75e7-4321-8ea0-cf04b315ba67",
       "name": "Slack",
@@ -31,89 +71,323 @@
           "id": "VF1RKmzNpL69birS",
           "name": "Zynera's Slack account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {}
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "99018398-d2a6-4eb2-855b-7bd074538ca3",
+              "leftValue": "={{ $json.data.cashTrackingSessions.pageInfo.hasNextPage }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        40
+      ],
+      "id": "fab012ba-b056-44a4-bdec-5965345f6564",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4bed2b01-ae71-4e4b-94eb-72fda9dd80eb",
+              "name": "endCursor",
+              "value": "={{  $json.data.cashTrackingSessions.pageInfo.endCursor  }}",
+              "type": "string"
+            }
           ]
         },
-        "feedUrl": "https://community.airtable.com/idgpi83864/rss/board?board.id=jobs"
+        "options": {}
       },
-      "type": "n8n-nodes-base.rssFeedReadTrigger",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        20,
-        0
+        1320,
+        100
       ],
-      "id": "f525ede7-675a-4613-82c1-6b56aefa7931",
-      "name": "RSS Feed Trigger"
+      "id": "93e964aa-f4cf-428c-bbdf-265b9be2a13e",
+      "name": "Edit Fields"
     },
     {
       "parameters": {
+        "fieldToSplitOut": "data.cashTrackingSessions.edges",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        -60
+      ],
+      "id": "84b566e7-7fed-4eba-80ea-e50dc14e5bcf",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "create",
         "base": {
           "__rl": true,
-          "value": "=appmLkopsWumFkgXM",
-          "mode": "id"
+          "value": "appKb1jLst80REX4f",
+          "mode": "list",
+          "cachedResultName": "Finance OS",
+          "cachedResultUrl": "https://airtable.com/appKb1jLst80REX4f"
         },
         "table": {
           "__rl": true,
-          "value": "=tblMaSYop5fzqigPi",
-          "mode": "id"
+          "value": "tblY8KBWYY3IKThB1",
+          "mode": "list",
+          "cachedResultName": "t1",
+          "cachedResultUrl": "https://airtable.com/appKb1jLst80REX4f/tblY8KBWYY3IKThB1"
         },
-        "id": "rec2XPZnALaEUysnz",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.node.location.name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Assignee",
+              "displayName": "Assignee",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Todo",
+                  "value": "Todo"
+                },
+                {
+                  "name": "In progress",
+                  "value": "In progress"
+                },
+                {
+                  "name": "Done",
+                  "value": "Done"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        20,
-        -220
+        1420,
+        -60
       ],
-      "id": "cc1f380b-42be-4eb6-9702-0376a5b36fe9",
-      "name": "Airtable",
+      "id": "bd747c11-2801-4826-8d4a-c37dfaef4d36",
+      "name": "Airtable1",
       "credentials": {
         "airtableTokenApi": {
-          "id": "f15vRM0yMsganWrF",
-          "name": "Karim's Airtable account"
+          "id": "UguKILSlKqvVPeFY",
+          "name": "Valued's Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        40
+      ],
+      "id": "8eb80b35-f91f-4241-a2a1-3529be6277ec",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "node.adjustments.edges",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        -60
+      ],
+      "id": "f7c4f2eb-8de3-453b-aac3-2a143bce2340",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appKb1jLst80REX4f",
+          "mode": "list",
+          "cachedResultName": "Finance OS",
+          "cachedResultUrl": "https://airtable.com/appKb1jLst80REX4f"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblX1KO5QZQZNFbZ3",
+          "mode": "list",
+          "cachedResultName": "t2",
+          "cachedResultUrl": "https://airtable.com/appKb1jLst80REX4f/tblX1KO5QZQZNFbZ3"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Assignee",
+              "displayName": "Assignee",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Todo",
+                  "value": "Todo"
+                },
+                {
+                  "name": "In progress",
+                  "value": "In progress"
+                },
+                {
+                  "name": "Done",
+                  "value": "Done"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1740,
+        -60
+      ],
+      "id": "7bd10af5-86b4-416f-9c06-c031a2baaea5",
+      "name": "Airtable2",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UguKILSlKqvVPeFY",
+          "name": "Valued's Airtable account"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// This should be placed in a Function node between your GET and CREATE operations\nfunction prepareRecordForCreation(items) {\n  // Get the first item (the retrieved record)\n  if (!Array.isArray(items) || items.length === 0 || !items[0].json) {\n    return [{ json: { fields: {} } }];\n  }\n  \n  const record = items[0].json;\n  \n  // System fields that should be filtered out\n  const systemFields = [\n    'Record ID',\n    'Created at',\n    'Last modified at',\n    'Created time',\n    'Last modified time',\n    'Created By',\n    'Last Modified By'\n  ];\n  \n  // Create a new fields object without system fields\n  const fieldsToCreate = {};\n  \n  if (record.fields) {\n    Object.entries(record.fields).forEach(([key, value]) => {\n      if (!systemFields.includes(key)) {\n        fieldsToCreate[key] = value;\n      }\n    });\n  }\n  \n  // Return the properly formatted object for create operation\n  return [{\n    json: {\n      fields: fieldsToCreate\n    }\n  }];\n}\n\n// Process the input items\nreturn prepareRecordForCreation($input.all());"
+        "jsCode": "let results = [],\n  i = 0;\n\ndo {\n  try {\n    results = results.concat($(GraphQL\").all(0, i));\n  } catch (error) {\n    return results;\n  }\n  i++;\n} while (true);"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        240,
-        -220
+        1100,
+        -60
       ],
-      "id": "d5b18adf-be7d-4d60-baf7-e6d7f248d6d1",
-      "name": "Code"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        460,
-        -220
-      ],
-      "id": "8272667b-bc68-447a-93c2-a5cf1322d864",
-      "name": "HTTP Request"
+      "id": "594a83e4-c43a-4807-aff7-ea2f29cd7811",
+      "name": "Code1"
     }
   ],
   "connections": {
-    "Slack": {
-      "main": [
-        []
-      ]
-    },
     "RSS Feed Trigger": {
       "main": [
         [
@@ -125,26 +399,103 @@
         ]
       ]
     },
-    "Airtable": {
+    "Slack": {
+      "main": [
+        []
+      ]
+    },
+    "GraphQL": {
       "main": [
         [
           {
-            "node": "Code",
+            "node": "If",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code": {
+    "If": {
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "GraphQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Airtable1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "GraphQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Airtable2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable2": {
+      "main": [
+        []
+      ]
+    },
+    "Code1": {
+      "main": [
+        []
       ]
     }
   },
@@ -156,7 +507,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "d7978634-1fe3-4232-ba3b-f0851b473c64",
+  "versionId": "c1615826-6b80-439f-9a66-8d44780f85dd",
   "triggerCount": 0,
   "tags": []
 }
