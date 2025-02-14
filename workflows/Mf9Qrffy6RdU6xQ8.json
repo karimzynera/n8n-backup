@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-13T23:01:22.000Z",
+  "updatedAt": "2025-02-13T23:08:55.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -28,7 +28,7 @@
       "parameters": {
         "authentication": "customAuth",
         "endpoint": "https://valued-de.myshopify.com/admin/api/2024-10/graphql.json",
-        "query": "=query {\n  cashTrackingSessions(first: 250, after: {{ $if($json.endCursor, `\"${$json.endCursor}\"`, \"null\") }}\n) {\n    edges {\n      node {\n        id\n        location { name }\n        closingBalance { amount }\n        closingNote\n        closingTime\n        openingBalance { amount }\n        openingNote\n        openingTime\n        adjustments(first: 100, after: null) {\n          edges {\n            node {\n              cash {\n                amount\n              }\n              note\n              time\n            }\n          }\n          pageInfo {\n            hasNextPage\n            endCursor\n          }\n        }\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}"
+        "query": "=query {\n  cashTrackingSessions(first: 5, after: {{ $if($json.endCursor, `\"${$json.endCursor}\"`, \"null\") }}\n) {\n    edges {\n      node {\n        id\n        location { name }\n        closingBalance { amount }\n        closingNote\n        closingTime\n        openingBalance { amount }\n        openingNote\n        openingTime\n        adjustments(first: 100, after: null) {\n          edges {\n            node {\n              cash {\n                amount\n              }\n              note\n              time\n            }\n          }\n          pageInfo {\n            hasNextPage\n            endCursor\n          }\n        }\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}"
       },
       "type": "n8n-nodes-base.graphql",
       "typeVersion": 1.1,
@@ -87,7 +87,7 @@
             {
               "id": "99018398-d2a6-4eb2-855b-7bd074538ca3",
               "leftValue": "={{ $json.data.cashTrackingSessions.pageInfo.hasNextPage }}",
-              "rightValue": false,
+              "rightValue": true,
               "operator": {
                 "type": "boolean",
                 "operation": "equals"
@@ -133,12 +133,13 @@
     {
       "parameters": {
         "fieldToSplitOut": "data.cashTrackingSessions.edges",
+        "include": "allOtherFields",
         "options": {}
       },
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1260,
+        1200,
         -60
       ],
       "id": "84b566e7-7fed-4eba-80ea-e50dc14e5bcf",
@@ -261,13 +262,14 @@
     {
       "parameters": {
         "fieldToSplitOut": "node.adjustments.edges",
+        "include": "allOtherFields",
         "options": {}
       },
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1580,
-        -60
+        1600,
+        -200
       ],
       "id": "f7c4f2eb-8de3-453b-aac3-2a143bce2340",
       "name": "Split Out1"
@@ -291,7 +293,9 @@
         },
         "columns": {
           "mappingMode": "defineBelow",
-          "value": {},
+          "value": {
+            "Name": "={{ $json.note }}"
+          },
           "matchingColumns": [],
           "schema": [
             {
@@ -361,7 +365,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        1740,
+        1760,
         -60
       ],
       "id": "7bd10af5-86b4-416f-9c06-c031a2baaea5",
@@ -375,12 +379,12 @@
     },
     {
       "parameters": {
-        "jsCode": "let results = [],\n  i = 0;\n\ndo {\n  try {\n    results = results.concat($(GraphQL\").all(0, i));\n  } catch (error) {\n    return results;\n  }\n  i++;\n} while (true);"
+        "jsCode": "let results = [],\n  i = 0;\n\ndo {\n  try {\n    results = results.concat($(\"GraphQL\").all(0, i));\n  } catch (error) {\n    return results;\n  }\n  i++;\n} while (true);"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1100,
+        940,
         -60
       ],
       "id": "594a83e4-c43a-4807-aff7-ea2f29cd7811",
@@ -495,7 +499,13 @@
     },
     "Code1": {
       "main": [
-        []
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -506,8 +516,1356 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "pinData": {},
-  "versionId": "c1615826-6b80-439f-9a66-8d44780f85dd",
+  "pinData": {
+    "Airtable1": [
+      {
+        "json": {
+          "id": "rec07531nSB84yBU6",
+          "createdTime": "2025-02-13T23:05:47.000Z",
+          "fields": {
+            "Name": "Store Munich"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recvxNNwYjksAqX0x",
+          "createdTime": "2025-02-13T23:05:47.000Z",
+          "fields": {
+            "Name": "Store Munich"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recOMZM5FdUksssil",
+          "createdTime": "2025-02-13T23:05:48.000Z",
+          "fields": {
+            "Name": "Store Munich"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recaOiui7DzkGDEBC",
+          "createdTime": "2025-02-13T23:05:48.000Z",
+          "fields": {
+            "Name": "Store Munich"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recS3Pf1UA9F4lccO",
+          "createdTime": "2025-02-13T23:05:49.000Z",
+          "fields": {
+            "Name": "Store Munich"
+          }
+        }
+      }
+    ],
+    "Code1": [
+      {
+        "json": {
+          "data": {
+            "cashTrackingSessions": {
+              "edges": [
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5537235165",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "2380.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-04T19:10:25Z",
+                    "openingBalance": {
+                      "amount": "70.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-04T11:16:17Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Ankauf Rodi Yakoub Sudetenstr. 16 82110 Germering Nike dunk low Kentucky eu39 190€",
+                            "time": "2022-11-04T14:53:02Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-70.0"
+                            },
+                            "note": "Wechselgeld von Nb ",
+                            "time": "2022-11-04T18:33:37Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODIxMDkwNTI1LCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNCAxODozMzozNy4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5543690461",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "5920.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-05T19:00:04Z",
+                    "openingBalance": {
+                      "amount": "2380.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-05T10:55:45Z",
+                    "adjustments": {
+                      "edges": [],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5552570589",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "4250.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-08T11:01:09Z",
+                    "openingBalance": {
+                      "amount": "5920.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-07T11:49:27Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-275.0"
+                            },
+                            "note": "Air Jordan 4 Midnight Navy /38 EU/ Nqn5hth",
+                            "time": "2022-11-07T12:22:08Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-275.0"
+                            },
+                            "note": "Air Jordan 4 Midnight Navy / 38.5 /DQSUwk",
+                            "time": "2022-11-07T12:24:07Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-1150.0"
+                            },
+                            "note": "Air Jordan 1 Low Travis Scott Reverse Mocha/ 44EU / o32uMFK",
+                            "time": "2022-11-07T12:26:02Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-220.0"
+                            },
+                            "note": "Einkauf Kickz München Stachus Trans Nr 73024",
+                            "time": "2022-11-07T18:13:40Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99538",
+                            "time": "2022-11-07T18:16:19Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99539",
+                            "time": "2022-11-07T18:17:23Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-100.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99540",
+                            "time": "2022-11-07T18:17:54Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODMzMjQ3NDUzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNyAxODoxNzo1NC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5557453021",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "3190.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-09T04:07:05Z",
+                    "openingBalance": {
+                      "amount": "4250.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-08T11:02:39Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr. 99569",
+                            "time": "2022-11-09T03:56:16Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99572",
+                            "time": "2022-11-09T03:58:12Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr. 99568",
+                            "time": "2022-11-09T04:00:04Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99570",
+                            "time": "2022-11-09T04:00:56Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr99571",
+                            "time": "2022-11-09T04:01:35Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-270.0"
+                            },
+                            "note": "Ankauf ruVcyPL",
+                            "time": "2022-11-09T04:02:41Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-270.0"
+                            },
+                            "note": "Ankauf vjKUAHo",
+                            "time": "2022-11-09T04:03:19Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-280.0"
+                            },
+                            "note": "Ankauf tJi2E2W",
+                            "time": "2022-11-09T04:03:54Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-150.0"
+                            },
+                            "note": "Ankauf xtYwGgl",
+                            "time": "2022-11-09T04:04:30Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODM5OTY0ODkzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAwNDowNDozMC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5563121885",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "3400.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-09T19:33:25Z",
+                    "openingBalance": {
+                      "amount": "3190.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-09T11:14:07Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "200.0"
+                            },
+                            "note": "Bestellung #1066",
+                            "time": "2022-11-09T19:32:38Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODQxMjc1NjEzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAxOTozMjozOC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": true,
+                "endCursor": "eyJsYXN0X2lkIjo1NTYzMTIxODg1LCJsYXN0X3ZhbHVlIjoiNTU2MzEyMTg4NSJ9"
+              }
+            }
+          },
+          "extensions": {
+            "cost": {
+              "requestedQueryCost": 41,
+              "actualQueryCost": 20,
+              "throttleStatus": {
+                "maximumAvailable": 4000,
+                "currentlyAvailable": 3980,
+                "restoreRate": 200
+              }
+            }
+          }
+        }
+      }
+    ],
+    "Split Out": [
+      {
+        "json": {
+          "node": {
+            "id": "gid://shopify/CashTrackingSession/5537235165",
+            "location": {
+              "name": "Store Munich"
+            },
+            "closingBalance": {
+              "amount": "2380.0"
+            },
+            "closingNote": null,
+            "closingTime": "2022-11-04T19:10:25Z",
+            "openingBalance": {
+              "amount": "70.0"
+            },
+            "openingNote": null,
+            "openingTime": "2022-11-04T11:16:17Z",
+            "adjustments": {
+              "edges": [
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-190.0"
+                    },
+                    "note": "Ankauf Rodi Yakoub Sudetenstr. 16 82110 Germering Nike dunk low Kentucky eu39 190€",
+                    "time": "2022-11-04T14:53:02Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-70.0"
+                    },
+                    "note": "Wechselgeld von Nb ",
+                    "time": "2022-11-04T18:33:37Z"
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": false,
+                "endCursor": "eyJsYXN0X2lkIjo0ODIxMDkwNTI1LCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNCAxODozMzozNy4wMDAwMDAifQ=="
+              }
+            }
+          }
+        }
+      },
+      {
+        "json": {
+          "node": {
+            "id": "gid://shopify/CashTrackingSession/5543690461",
+            "location": {
+              "name": "Store Munich"
+            },
+            "closingBalance": {
+              "amount": "5920.0"
+            },
+            "closingNote": null,
+            "closingTime": "2022-11-05T19:00:04Z",
+            "openingBalance": {
+              "amount": "2380.0"
+            },
+            "openingNote": null,
+            "openingTime": "2022-11-05T10:55:45Z",
+            "adjustments": {
+              "edges": [],
+              "pageInfo": {
+                "hasNextPage": false,
+                "endCursor": null
+              }
+            }
+          }
+        }
+      },
+      {
+        "json": {
+          "node": {
+            "id": "gid://shopify/CashTrackingSession/5552570589",
+            "location": {
+              "name": "Store Munich"
+            },
+            "closingBalance": {
+              "amount": "4250.0"
+            },
+            "closingNote": null,
+            "closingTime": "2022-11-08T11:01:09Z",
+            "openingBalance": {
+              "amount": "5920.0"
+            },
+            "openingNote": null,
+            "openingTime": "2022-11-07T11:49:27Z",
+            "adjustments": {
+              "edges": [
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-275.0"
+                    },
+                    "note": "Air Jordan 4 Midnight Navy /38 EU/ Nqn5hth",
+                    "time": "2022-11-07T12:22:08Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-275.0"
+                    },
+                    "note": "Air Jordan 4 Midnight Navy / 38.5 /DQSUwk",
+                    "time": "2022-11-07T12:24:07Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-1150.0"
+                    },
+                    "note": "Air Jordan 1 Low Travis Scott Reverse Mocha/ 44EU / o32uMFK",
+                    "time": "2022-11-07T12:26:02Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-220.0"
+                    },
+                    "note": "Einkauf Kickz München Stachus Trans Nr 73024",
+                    "time": "2022-11-07T18:13:40Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-200.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr 99538",
+                    "time": "2022-11-07T18:16:19Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-200.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr 99539",
+                    "time": "2022-11-07T18:17:23Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-100.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr 99540",
+                    "time": "2022-11-07T18:17:54Z"
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": false,
+                "endCursor": "eyJsYXN0X2lkIjo0ODMzMjQ3NDUzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNyAxODoxNzo1NC4wMDAwMDAifQ=="
+              }
+            }
+          }
+        }
+      },
+      {
+        "json": {
+          "node": {
+            "id": "gid://shopify/CashTrackingSession/5557453021",
+            "location": {
+              "name": "Store Munich"
+            },
+            "closingBalance": {
+              "amount": "3190.0"
+            },
+            "closingNote": null,
+            "closingTime": "2022-11-09T04:07:05Z",
+            "openingBalance": {
+              "amount": "4250.0"
+            },
+            "openingNote": null,
+            "openingTime": "2022-11-08T11:02:39Z",
+            "adjustments": {
+              "edges": [
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-190.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr. 99569",
+                    "time": "2022-11-09T03:56:16Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-200.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr 99572",
+                    "time": "2022-11-09T03:58:12Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-190.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr. 99568",
+                    "time": "2022-11-09T04:00:04Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-200.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr 99570",
+                    "time": "2022-11-09T04:00:56Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-200.0"
+                    },
+                    "note": "Einkauf footlocker Trans nr99571",
+                    "time": "2022-11-09T04:01:35Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-270.0"
+                    },
+                    "note": "Ankauf ruVcyPL",
+                    "time": "2022-11-09T04:02:41Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-270.0"
+                    },
+                    "note": "Ankauf vjKUAHo",
+                    "time": "2022-11-09T04:03:19Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-280.0"
+                    },
+                    "note": "Ankauf tJi2E2W",
+                    "time": "2022-11-09T04:03:54Z"
+                  }
+                },
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "-150.0"
+                    },
+                    "note": "Ankauf xtYwGgl",
+                    "time": "2022-11-09T04:04:30Z"
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": false,
+                "endCursor": "eyJsYXN0X2lkIjo0ODM5OTY0ODkzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAwNDowNDozMC4wMDAwMDAifQ=="
+              }
+            }
+          }
+        }
+      },
+      {
+        "json": {
+          "node": {
+            "id": "gid://shopify/CashTrackingSession/5563121885",
+            "location": {
+              "name": "Store Munich"
+            },
+            "closingBalance": {
+              "amount": "3400.0"
+            },
+            "closingNote": null,
+            "closingTime": "2022-11-09T19:33:25Z",
+            "openingBalance": {
+              "amount": "3190.0"
+            },
+            "openingNote": null,
+            "openingTime": "2022-11-09T11:14:07Z",
+            "adjustments": {
+              "edges": [
+                {
+                  "node": {
+                    "cash": {
+                      "amount": "200.0"
+                    },
+                    "note": "Bestellung #1066",
+                    "time": "2022-11-09T19:32:38Z"
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": false,
+                "endCursor": "eyJsYXN0X2lkIjo0ODQxMjc1NjEzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAxOTozMjozOC4wMDAwMDAifQ=="
+              }
+            }
+          }
+        }
+      }
+    ],
+    "If": [
+      {
+        "json": {
+          "data": {
+            "cashTrackingSessions": {
+              "edges": [
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5537235165",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "2380.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-04T19:10:25Z",
+                    "openingBalance": {
+                      "amount": "70.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-04T11:16:17Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Ankauf Rodi Yakoub Sudetenstr. 16 82110 Germering Nike dunk low Kentucky eu39 190€",
+                            "time": "2022-11-04T14:53:02Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-70.0"
+                            },
+                            "note": "Wechselgeld von Nb ",
+                            "time": "2022-11-04T18:33:37Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODIxMDkwNTI1LCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNCAxODozMzozNy4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5543690461",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "5920.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-05T19:00:04Z",
+                    "openingBalance": {
+                      "amount": "2380.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-05T10:55:45Z",
+                    "adjustments": {
+                      "edges": [],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5552570589",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "4250.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-08T11:01:09Z",
+                    "openingBalance": {
+                      "amount": "5920.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-07T11:49:27Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-275.0"
+                            },
+                            "note": "Air Jordan 4 Midnight Navy /38 EU/ Nqn5hth",
+                            "time": "2022-11-07T12:22:08Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-275.0"
+                            },
+                            "note": "Air Jordan 4 Midnight Navy / 38.5 /DQSUwk",
+                            "time": "2022-11-07T12:24:07Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-1150.0"
+                            },
+                            "note": "Air Jordan 1 Low Travis Scott Reverse Mocha/ 44EU / o32uMFK",
+                            "time": "2022-11-07T12:26:02Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-220.0"
+                            },
+                            "note": "Einkauf Kickz München Stachus Trans Nr 73024",
+                            "time": "2022-11-07T18:13:40Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99538",
+                            "time": "2022-11-07T18:16:19Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99539",
+                            "time": "2022-11-07T18:17:23Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-100.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99540",
+                            "time": "2022-11-07T18:17:54Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODMzMjQ3NDUzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNyAxODoxNzo1NC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5557453021",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "3190.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-09T04:07:05Z",
+                    "openingBalance": {
+                      "amount": "4250.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-08T11:02:39Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr. 99569",
+                            "time": "2022-11-09T03:56:16Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99572",
+                            "time": "2022-11-09T03:58:12Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr. 99568",
+                            "time": "2022-11-09T04:00:04Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99570",
+                            "time": "2022-11-09T04:00:56Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr99571",
+                            "time": "2022-11-09T04:01:35Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-270.0"
+                            },
+                            "note": "Ankauf ruVcyPL",
+                            "time": "2022-11-09T04:02:41Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-270.0"
+                            },
+                            "note": "Ankauf vjKUAHo",
+                            "time": "2022-11-09T04:03:19Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-280.0"
+                            },
+                            "note": "Ankauf tJi2E2W",
+                            "time": "2022-11-09T04:03:54Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-150.0"
+                            },
+                            "note": "Ankauf xtYwGgl",
+                            "time": "2022-11-09T04:04:30Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODM5OTY0ODkzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAwNDowNDozMC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5563121885",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "3400.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-09T19:33:25Z",
+                    "openingBalance": {
+                      "amount": "3190.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-09T11:14:07Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "200.0"
+                            },
+                            "note": "Bestellung #1066",
+                            "time": "2022-11-09T19:32:38Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODQxMjc1NjEzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAxOTozMjozOC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": true,
+                "endCursor": "eyJsYXN0X2lkIjo1NTYzMTIxODg1LCJsYXN0X3ZhbHVlIjoiNTU2MzEyMTg4NSJ9"
+              }
+            }
+          },
+          "extensions": {
+            "cost": {
+              "requestedQueryCost": 41,
+              "actualQueryCost": 20,
+              "throttleStatus": {
+                "maximumAvailable": 4000,
+                "currentlyAvailable": 3980,
+                "restoreRate": 200
+              }
+            }
+          }
+        }
+      }
+    ],
+    "GraphQL": [
+      {
+        "json": {
+          "data": {
+            "cashTrackingSessions": {
+              "edges": [
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5537235165",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "2380.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-04T19:10:25Z",
+                    "openingBalance": {
+                      "amount": "70.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-04T11:16:17Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Ankauf Rodi Yakoub Sudetenstr. 16 82110 Germering Nike dunk low Kentucky eu39 190€",
+                            "time": "2022-11-04T14:53:02Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-70.0"
+                            },
+                            "note": "Wechselgeld von Nb ",
+                            "time": "2022-11-04T18:33:37Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODIxMDkwNTI1LCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNCAxODozMzozNy4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5543690461",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "5920.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-05T19:00:04Z",
+                    "openingBalance": {
+                      "amount": "2380.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-05T10:55:45Z",
+                    "adjustments": {
+                      "edges": [],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5552570589",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "4250.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-08T11:01:09Z",
+                    "openingBalance": {
+                      "amount": "5920.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-07T11:49:27Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-275.0"
+                            },
+                            "note": "Air Jordan 4 Midnight Navy /38 EU/ Nqn5hth",
+                            "time": "2022-11-07T12:22:08Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-275.0"
+                            },
+                            "note": "Air Jordan 4 Midnight Navy / 38.5 /DQSUwk",
+                            "time": "2022-11-07T12:24:07Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-1150.0"
+                            },
+                            "note": "Air Jordan 1 Low Travis Scott Reverse Mocha/ 44EU / o32uMFK",
+                            "time": "2022-11-07T12:26:02Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-220.0"
+                            },
+                            "note": "Einkauf Kickz München Stachus Trans Nr 73024",
+                            "time": "2022-11-07T18:13:40Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99538",
+                            "time": "2022-11-07T18:16:19Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99539",
+                            "time": "2022-11-07T18:17:23Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-100.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99540",
+                            "time": "2022-11-07T18:17:54Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODMzMjQ3NDUzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wNyAxODoxNzo1NC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5557453021",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "3190.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-09T04:07:05Z",
+                    "openingBalance": {
+                      "amount": "4250.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-08T11:02:39Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr. 99569",
+                            "time": "2022-11-09T03:56:16Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99572",
+                            "time": "2022-11-09T03:58:12Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-190.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr. 99568",
+                            "time": "2022-11-09T04:00:04Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr 99570",
+                            "time": "2022-11-09T04:00:56Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-200.0"
+                            },
+                            "note": "Einkauf footlocker Trans nr99571",
+                            "time": "2022-11-09T04:01:35Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-270.0"
+                            },
+                            "note": "Ankauf ruVcyPL",
+                            "time": "2022-11-09T04:02:41Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-270.0"
+                            },
+                            "note": "Ankauf vjKUAHo",
+                            "time": "2022-11-09T04:03:19Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-280.0"
+                            },
+                            "note": "Ankauf tJi2E2W",
+                            "time": "2022-11-09T04:03:54Z"
+                          }
+                        },
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "-150.0"
+                            },
+                            "note": "Ankauf xtYwGgl",
+                            "time": "2022-11-09T04:04:30Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODM5OTY0ODkzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAwNDowNDozMC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "id": "gid://shopify/CashTrackingSession/5563121885",
+                    "location": {
+                      "name": "Store Munich"
+                    },
+                    "closingBalance": {
+                      "amount": "3400.0"
+                    },
+                    "closingNote": null,
+                    "closingTime": "2022-11-09T19:33:25Z",
+                    "openingBalance": {
+                      "amount": "3190.0"
+                    },
+                    "openingNote": null,
+                    "openingTime": "2022-11-09T11:14:07Z",
+                    "adjustments": {
+                      "edges": [
+                        {
+                          "node": {
+                            "cash": {
+                              "amount": "200.0"
+                            },
+                            "note": "Bestellung #1066",
+                            "time": "2022-11-09T19:32:38Z"
+                          }
+                        }
+                      ],
+                      "pageInfo": {
+                        "hasNextPage": false,
+                        "endCursor": "eyJsYXN0X2lkIjo0ODQxMjc1NjEzLCJsYXN0X3ZhbHVlIjoiMjAyMi0xMS0wOSAxOTozMjozOC4wMDAwMDAifQ=="
+                      }
+                    }
+                  }
+                }
+              ],
+              "pageInfo": {
+                "hasNextPage": true,
+                "endCursor": "eyJsYXN0X2lkIjo1NTYzMTIxODg1LCJsYXN0X3ZhbHVlIjoiNTU2MzEyMTg4NSJ9"
+              }
+            }
+          },
+          "extensions": {
+            "cost": {
+              "requestedQueryCost": 41,
+              "actualQueryCost": 20,
+              "throttleStatus": {
+                "maximumAvailable": 4000,
+                "currentlyAvailable": 3980,
+                "restoreRate": 200
+              }
+            }
+          }
+        }
+      }
+    ],
+    "Edit Fields": [
+      {
+        "json": {
+          "endCursor": "eyJsYXN0X2lkIjo1NTYzMTIxODg1LCJsYXN0X3ZhbHVlIjoiNTU2MzEyMTg4NSJ9"
+        }
+      }
+    ]
+  },
+  "versionId": "64b6051c-a050-4331-b67d-e83c279185f8",
   "triggerCount": 0,
   "tags": []
 }
