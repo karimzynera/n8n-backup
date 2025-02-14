@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-14T06:36:15.000Z",
+  "updatedAt": "2025-02-14T07:36:02.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -147,6 +147,7 @@
     },
     {
       "parameters": {
+        "authentication": "airtableOAuth2Api",
         "operation": "create",
         "base": {
           "__rl": true,
@@ -242,9 +243,9 @@
       "id": "bd747c11-2801-4826-8d4a-c37dfaef4d36",
       "name": "Airtable1",
       "credentials": {
-        "airtableTokenApi": {
-          "id": "UguKILSlKqvVPeFY",
-          "name": "Valued's Airtable account"
+        "airtableOAuth2Api": {
+          "id": "kTacYQkCUF40gO0N",
+          "name": "Airtable OAuth2 account"
         }
       }
     },
@@ -1538,7 +1539,7 @@
       }
     ]
   },
-  "versionId": "fdf2b822-1f8d-4001-b1a2-bfa8fc06a4df",
+  "versionId": "2e54607e-589e-458c-a406-0b7ae5318dd4",
   "triggerCount": 0,
   "tags": []
 }
