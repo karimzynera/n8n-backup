@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-13T23:08:55.000Z",
+  "updatedAt": "2025-02-14T00:11:18.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -17,8 +17,8 @@
       "type": "n8n-nodes-base.rssFeedReadTrigger",
       "typeVersion": 1,
       "position": [
-        200,
-        -160
+        400,
+        -540
       ],
       "id": "f525ede7-675a-4613-82c1-6b56aefa7931",
       "name": "RSS Feed Trigger",
@@ -33,7 +33,7 @@
       "type": "n8n-nodes-base.graphql",
       "typeVersion": 1.1,
       "position": [
-        460,
+        420,
         40
       ],
       "id": "6b8bae05-81aa-4f7c-890c-6ef7308181d6",
@@ -60,8 +60,8 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.3,
       "position": [
-        380,
-        -160
+        580,
+        -540
       ],
       "id": "39aaa52f-75e7-4321-8ea0-cf04b315ba67",
       "name": "Slack",
@@ -101,7 +101,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        660,
+        620,
         40
       ],
       "id": "fab012ba-b056-44a4-bdec-5965345f6564",
@@ -124,8 +124,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1320,
-        100
+        860,
+        120
       ],
       "id": "93e964aa-f4cf-428c-bbdf-265b9be2a13e",
       "name": "Edit Fields"
@@ -139,8 +139,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1200,
-        -60
+        1080,
+        -40
       ],
       "id": "84b566e7-7fed-4eba-80ea-e50dc14e5bcf",
       "name": "Split Out"
@@ -236,8 +236,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        1420,
-        -60
+        1260,
+        -40
       ],
       "id": "bd747c11-2801-4826-8d4a-c37dfaef4d36",
       "name": "Airtable1",
@@ -268,8 +268,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1600,
-        -200
+        1440,
+        -40
       ],
       "id": "f7c4f2eb-8de3-453b-aac3-2a143bce2340",
       "name": "Split Out1"
@@ -365,8 +365,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        1760,
-        -60
+        1620,
+        -40
       ],
       "id": "7bd10af5-86b4-416f-9c06-c031a2baaea5",
       "name": "Airtable2",
@@ -384,8 +384,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        940,
-        -60
+        860,
+        -40
       ],
       "id": "594a83e4-c43a-4807-aff7-ea2f29cd7811",
       "name": "Code1"
@@ -1865,7 +1865,7 @@
       }
     ]
   },
-  "versionId": "64b6051c-a050-4331-b67d-e83c279185f8",
+  "versionId": "b6e355ae-1281-400f-ac66-b327440c11b6",
   "triggerCount": 0,
   "tags": []
 }
