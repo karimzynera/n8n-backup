@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-01-27T11:03:17.684Z",
-  "updatedAt": "2025-01-27T11:17:19.000Z",
+  "updatedAt": "2025-02-14T07:49:39.000Z",
   "id": "DcJZuqH67Gv40d4l",
-  "name": "📝—Realtime Polling Notion YouTube",
+  "name": "📝—Realtime Polling Notion (YouTube)",
   "active": false,
   "nodes": [
     {
@@ -515,7 +515,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "5c4bfd2f-ae22-48d2-b114-d8796123f276",
+  "versionId": "6240f666-d176-4cb6-b82c-78d89f324321",
   "triggerCount": 0,
   "tags": []
 }
