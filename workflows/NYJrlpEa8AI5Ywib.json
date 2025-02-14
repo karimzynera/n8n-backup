@@ -1,0 +1,89 @@
+{
+  "createdAt": "2025-02-14T07:43:38.573Z",
+  "updatedAt": "2025-02-14T07:49:21.000Z",
+  "id": "NYJrlpEa8AI5Ywib",
+  "name": "💫—New n8n Version",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyWeek"
+            }
+          ]
+        },
+        "feedUrl": "https://github.com/n8n-io/n8n/releases.atom"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "31e54e32-492a-4b17-a546-82377ff01cd7",
+      "name": "GitHub Release Trigger"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C07VAUAGKUG",
+          "mode": "list",
+          "cachedResultName": "alerts"
+        },
+        "text": "=_*🚀 New n8n version has been published: {{ $json.title }}*_",
+        "otherOptions": {
+          "includeLinkToWorkflow": false,
+          "botProfile": {
+            "imageValues": {
+              "profilePhotoType": "emoji",
+              "icon_emoji": ":dizzy:"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        220,
+        0
+      ],
+      "id": "90fb181f-9936-4500-82c8-a9a3a8dec2a8",
+      "name": "Ping Alert",
+      "webhookId": "840ea930-3d95-49e3-b85e-f19fce35f007",
+      "credentials": {
+        "slackApi": {
+          "id": "VF1RKmzNpL69birS",
+          "name": "Zynera's Slack account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "GitHub Release Trigger": {
+      "main": [
+        [
+          {
+            "node": "Ping Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "128b21b7-cedc-4bb3-bb16-3b87c61247c1",
+  "triggerCount": 0,
+  "tags": []
+}
