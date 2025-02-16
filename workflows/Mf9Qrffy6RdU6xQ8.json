@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-02-03T08:22:15.893Z",
-  "updatedAt": "2025-02-14T07:36:02.000Z",
+  "updatedAt": "2025-02-16T19:53:34.000Z",
   "id": "Mf9Qrffy6RdU6xQ8",
   "name": "🌬️—Airtable Community Post",
   "active": false,
@@ -41,7 +41,7 @@
       "credentials": {
         "httpCustomAuth": {
           "id": "4KGNQAAXJz6l8xcO",
-          "name": "Shopify"
+          "name": "Valued's Shopify account"
         }
       }
     },
@@ -390,6 +390,70 @@
       ],
       "id": "594a83e4-c43a-4807-aff7-ea2f29cd7811",
       "name": "Code1"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/todos",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "_limit",
+              "value": "10"
+            },
+            {
+              "name": " _start",
+              "value": "5"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        300
+      ],
+      "id": "72593804-4411-49a7-83f5-0a7814a74b3b",
+      "name": "Tester"
+    },
+    {
+      "parameters": {
+        "url": "https://valued-de.myshopify.com/admin/api/2024-10/graphql.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "query {   cashTrackingSessions(first: 5 ) {     edges {       node {         id         location { id name }         closingBalance { amount }         closingNote         closingTime         openingBalance { amount }         openingNote         openingTime          totalCashSales { amount }         totalCashRefunds { amount }         totalDiscrepancy { amount }         totalAdjustments { amount }         expectedOpeningBalance { amount }         expectedClosingBalance { amount }         expectedBalance { amount }         netCashSales { amount }         cashTransactions (first: 100) { edges { node { order { name } } } }         cashTrackingEnabled         registerName          adjustments(first: 100, after: null) {           edges {             node {               cash {                 amount               }               note               time             }           }           pageInfo {             hasNextPage             endCursor           }         }       }     }     pageInfo {       hasNextPage       endCursor     }   } }"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        380,
+        300
+      ],
+      "id": "8d215b76-7162-4501-b206-2a1410eda4ec",
+      "name": "Graph!QL",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "4KGNQAAXJz6l8xcO",
+          "name": "Valued's Shopify account"
+        }
+      }
     }
   ],
   "connections": {
@@ -464,7 +528,7 @@
       "main": [
         [
           {
-            "node": "GraphQL",
+            "node": "Tester",
             "type": "main",
             "index": 0
           }
@@ -503,6 +567,17 @@
         [
           {
             "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tester": {
+      "main": [
+        [
+          {
+            "node": "Graph!QL",
             "type": "main",
             "index": 0
           }
@@ -1539,7 +1614,7 @@
       }
     ]
   },
-  "versionId": "2e54607e-589e-458c-a406-0b7ae5318dd4",
+  "versionId": "932f661c-52c3-45cc-9c50-671c95b382a1",
   "triggerCount": 0,
   "tags": []
 }
