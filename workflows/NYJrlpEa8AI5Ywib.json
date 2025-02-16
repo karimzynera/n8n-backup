@@ -1,9 +1,9 @@
 {
   "createdAt": "2025-02-14T07:43:38.573Z",
-  "updatedAt": "2025-02-14T07:49:21.000Z",
+  "updatedAt": "2025-02-16T19:36:48.000Z",
   "id": "NYJrlpEa8AI5Ywib",
-  "name": "💫—New n8n Version",
-  "active": false,
+  "name": "💫—New n8n Version Published",
+  "active": true,
   "nodes": [
     {
       "parameters": {
@@ -78,12 +78,16 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:GitHub Release Trigger": {
+      "lastItemDate": "2025-02-15T10:30:36.000Z"
+    }
+  },
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "128b21b7-cedc-4bb3-bb16-3b87c61247c1",
-  "triggerCount": 0,
+  "versionId": "31d3c6d6-1e1a-4839-b1ba-1a6e7a83bea0",
+  "triggerCount": 1,
   "tags": []
 }
